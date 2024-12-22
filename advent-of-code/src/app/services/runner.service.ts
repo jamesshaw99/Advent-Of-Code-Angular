@@ -2,22 +2,19 @@ import { Injectable } from '@angular/core';
 import { InputService } from './input.service';
 import { Subject } from 'rxjs';
 import { challengeInstances } from '../helpers/challenge-definitions';
+import { day } from '../helpers/day';
+import { RunnerResults } from '../models/RunnerResults';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RunnerService {
-  challenges: {
-    [year: number]: {
-      [day: number]: {
+  challenges: Record<number, Record<number, {
         run: (input: string[]) => {
           part1: string;
           part2: string;
-          input: string[];
         };
-      };
-    };
-  } = {};
+      }>> = {};
 
   constructor(
     private inputService: InputService
@@ -26,7 +23,7 @@ export class RunnerService {
   }
 
   initializeChallenges(
-    challengeInstances: { year: number; day: number; instance: any }[]
+    challengeInstances: { year: number; day: number; instance: day }[]
   ): void {
     for (const { year, day, instance } of challengeInstances) {
       if (!this.challenges[year]) {
@@ -44,14 +41,14 @@ export class RunnerService {
 
   async runAllChallenges(
     year: number
-  ): Promise<Subject<{ day: number; part1: string; part2: string }[]>> {
+  ): Promise<Subject<RunnerResults[]>> {
     const days = Object.keys(this.challenges[year] || {}).map((day) =>
       parseInt(day, 10)
     );
     const resultsSubject = new Subject<
-      { day: number; part1: string; part2: string }[]
+      RunnerResults[]
     >();
-    const challengeResults: { day: number; part1: string; part2: string }[] = [];
+    const challengeResults: RunnerResults[] = [];
 
     (async () => {
       for (const day of days) {

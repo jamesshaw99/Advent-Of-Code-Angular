@@ -1,8 +1,8 @@
 import { day } from '../helpers/day';
-import { Point } from '../helpers/point';
+import { Point } from '../models/point';
 
 export class year2024day8 extends day {
-antennas: { [key: string]: Point[] } = {};
+antennas: Record<string, Point[]> = {};
 
   override preChallenge(): void {
     this.antennas = {};

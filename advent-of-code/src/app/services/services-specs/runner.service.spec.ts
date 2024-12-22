@@ -6,9 +6,10 @@ import {
 import { RunnerService } from '../runner.service';
 import { InputService } from '../input.service';
 import { challengeInstances } from '../../helpers/challenge-definitions';
-import { delay, of, Subject } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
-import { emit } from 'process';
+import { of } from 'rxjs';
+import { RunnerResults } from '../../models/RunnerResults';
+import { day } from '../../helpers/day';
 
 describe('RunnerService', () => {
   let service: RunnerService;
@@ -19,29 +20,29 @@ describe('RunnerService', () => {
     {
       year: 2023,
       day: 1,
-      instance: {
-        run: jasmine
+      instance: new day(
+        jasmine
           .createSpy('run')
-          .and.returnValue({ part1: 'result1', part2: 'result1' }),
-      },
+          .and.returnValue({ part1: 'result1', part2: 'result1' })
+      ),
     },
     {
       year: 2023,
       day: 2,
-      instance: {
-        run: jasmine
+      instance: new day(
+        jasmine
           .createSpy('run')
-          .and.returnValue({ part1: 'result2', part2: 'result2' }),
-      },
+          .and.returnValue({ part1: 'result2', part2: 'result2' })
+      ),
     },
     {
       year: 2023,
       day: 3,
-      instance: {
-        run: jasmine
+      instance: new day(
+        jasmine
           .createSpy('run')
-          .and.returnValue({ part1: 'result3', part2: 'result3' }),
-      },
+          .and.returnValue({ part1: 'result3', part2: 'result3' })
+      ),
     },
   ];
 
@@ -70,34 +71,8 @@ describe('RunnerService', () => {
 
   describe('initializeChallenges', () => {
     it('should initialize challenges from challengeInstances', () => {
-      // Arrange
-      const mockInstances = [
-        {
-          year: 2023,
-          day: 1,
-          instance: {
-            run: (input: string[]) => ({
-              part1: 'result1',
-              part2: 'result2',
-              input,
-            }),
-          },
-        },
-        {
-          year: 2023,
-          day: 2,
-          instance: {
-            run: (input: string[]) => ({
-              part1: 'result1',
-              part2: 'result2',
-              input,
-            }),
-          },
-        },
-      ];
-
       // Act
-      service['initializeChallenges'](mockInstances);
+      service.initializeChallenges(mockChallengeInstances);
 
       // Assert
       expect(service['challenges'][2023][1]).toBeDefined();
@@ -108,7 +83,7 @@ describe('RunnerService', () => {
   describe('getYears', () => {
     it('should return years with challenges', () => {
       // Arrange
-      service['initializeChallenges'](challengeInstances);
+      service.initializeChallenges(challengeInstances);
 
       // Act
       const years = service.getYears();
@@ -120,45 +95,47 @@ describe('RunnerService', () => {
 
   describe('runAllChallenges', () => {
     it('should run all challenges for a given year', fakeAsync(() => {
-        // Arrange
-        const year = 2023;
-        const mockResults = [
-          { day: 1, part1: 'result1', part2: 'result2' },
-          { day: 2, part1: 'result1', part2: 'result2' },
-          { day: 3, part1: 'result1', part2: 'result2' },
-        ];
-      
-        spyOn(service, 'runChallenge').and.callFake((year: number, day: number) => {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve(mockResults.find((result) => result.day === day)!);
-                }, 100);
-              });
-        });
-      
-        // Act
-        let emittedResults: any[] = [];
-        const subjectPromise = service.runAllChallenges(year);
-      
-        subjectPromise.then((subject) => {
-          subject.subscribe((result) => {
-            emittedResults.push(result);
+      // Arrange
+      const year = 2023;
+      const mockResults = [
+        { day: 1, part1: 'result1', part2: 'result2' },
+        { day: 2, part1: 'result1', part2: 'result2' },
+        { day: 3, part1: 'result1', part2: 'result2' },
+      ];
+
+      spyOn(service, 'runChallenge').and.callFake(
+        (year: number, day: number) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(mockResults.find((result) => result.day === day)!);
+            }, 100);
           });
+        }
+      );
+
+      // Act
+      const emittedResults: RunnerResults[][] = [];
+      const subjectPromise = service.runAllChallenges(year);
+
+      subjectPromise.then((subject) => {
+        subject.subscribe((result) => {
+          emittedResults.push(result);
         });
-      
-        tick(300);
-        
-        // Assert
-        expect(emittedResults.length).toBe(3);
-        expect(emittedResults[0]).toEqual([
-          { day: 1, part1: 'result1', part2: 'result2' },
-        ]);
-        expect(emittedResults[1]).toEqual([
-          { day: 1, part1: 'result1', part2: 'result2' },
-          { day: 2, part1: 'result1', part2: 'result2' },
-        ]);
-        expect(emittedResults[2]).toEqual(mockResults);
-      }));
+      });
+
+      tick(300);
+
+      // Assert
+      expect(emittedResults.length).toBe(3);
+      expect(emittedResults[0]).toEqual([
+        { day: 1, part1: 'result1', part2: 'result2' },
+      ]);
+      expect(emittedResults[1]).toEqual([
+        { day: 1, part1: 'result1', part2: 'result2' },
+        { day: 2, part1: 'result1', part2: 'result2' },
+      ]);
+      expect(emittedResults[2]).toEqual(mockResults);
+    }));
   });
 
   describe('runChallenge', () => {
@@ -168,12 +145,12 @@ describe('RunnerService', () => {
       const day = 1;
       const mockResult = { part1: 'result1', part2: 'result2', input: [] };
 
-      service['challenges'] = {
+      service.challenges = {
         2023: {
           1: {
-            run: (input: string[]) => mockResult,
-          },
-        },
+            run: () => mockResult,
+          }
+        }
       };
 
       spyOn(service, 'runChallengeWithWorker').and.returnValue(
@@ -220,7 +197,7 @@ describe('RunnerService', () => {
       workerSpy.onerror = null;
 
       // Mock the global Worker constructor
-      spyOn(window, 'Worker').and.returnValue(workerSpy as any);
+      spyOn(window, 'Worker').and.returnValue(workerSpy as Worker);
 
       // Act
       service.runChallengeWithWorker(2024, 1).then((result) => {
@@ -249,7 +226,7 @@ describe('RunnerService', () => {
       workerSpy.onerror = null;
 
       // Mock the global Worker constructor
-      spyOn(window, 'Worker').and.returnValue(workerSpy as any);
+      spyOn(window, 'Worker').and.returnValue(workerSpy as Worker);
 
       // Act
       service.runChallengeWithWorker(2024, 1).catch((error) => {

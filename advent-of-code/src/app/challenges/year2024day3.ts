@@ -1,7 +1,7 @@
 import { day } from '../helpers/day';
 
 export class year2024day3 extends day {
-  memory: string = '';
+  memory = '';
   override preChallenge(): void {
     this.memory = this.input.join('');
   }
@@ -13,12 +13,11 @@ export class year2024day3 extends day {
   }
 
   override part2(): string {
-    const mulPattern = /mul\((\d{1,3}),(\d{1,3})\)/g;
     const filteredInput = this.memory
       .split("don't()")
       .map((part, index) => {
         if (index === 0) return part;
-        const [_disabled, ...enabled] = part.split('do()');
+        const [, ...enabled] = part.split('do()');
         return enabled.length ? enabled.join() : '';
       })
       .filter((part) => !!part)
@@ -34,7 +33,7 @@ export class year2024day3 extends day {
     let sum = 0;
 
     while ((match = mulPattern.exec(input)) !== null) {
-      const [_, x, y] = match;
+      const [, x, y] = match;
       sum += parseInt(x, 10) * parseInt(y, 10);
     }
     return sum;

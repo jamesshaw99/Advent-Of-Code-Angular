@@ -2,7 +2,7 @@ import { day } from '../helpers/day';
 
 export class year2024day6 extends day {
   map: string[][] = [];
-  visited: Set<string> = new Set();
+  visited = new Set<string>();
   guardPosition: { row: number; col: number } = { row: 0, col: 0 };
   directionIndex = 0; // Start facing up
   directions = [

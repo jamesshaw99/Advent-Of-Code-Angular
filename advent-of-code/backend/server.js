@@ -7,8 +7,9 @@ const port = 3000;
 const cors = require("cors");
 app.use(cors());
 
+require('dotenv').config();
 
-const apiKey = 'REMOVED';
+const sessionKey = process.env.SESSION_KEY;
 
 app.get('/challenge/:year/:day', (req, res) => {
   const year = req.params.year;
@@ -16,7 +17,7 @@ app.get('/challenge/:year/:day', (req, res) => {
 
   axios.get(`https://adventofcode.com/${year}/day/${day}/input`, {
     headers: {
-      'Cookie': `session=${apiKey}`,
+      'Cookie': `session=${sessionKey}`,
     },
   })
   .then((response) => {

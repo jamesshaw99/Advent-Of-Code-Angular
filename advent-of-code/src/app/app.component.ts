@@ -1,4 +1,4 @@
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { RunnerService } from './services/runner.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { RunnerService } from './services/runner.service';
   standalone: false,
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
   years: number[] = [];
   snowflakeArray = Array(5).fill(0);
   title = 'advent-of-code';
@@ -20,7 +20,7 @@ export class AppComponent {
   }
 
   ngAfterViewInit() {
-    this.snowflakes.forEach((snowflake, index) => {
+    this.snowflakes.forEach((snowflake) => {
       const element = snowflake.nativeElement;
 
       const randomDelay = Math.random() * 5;

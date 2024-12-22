@@ -1,8 +1,8 @@
 export class Game {
     private readonly gameNo: number;
-    private red: number = 0;
-    private blue: number = 0;
-    private green: number = 0;
+    private red = 0;
+    private blue = 0;
+    private green = 0;
 
     constructor(gameNo: number) {
         this.gameNo = gameNo;

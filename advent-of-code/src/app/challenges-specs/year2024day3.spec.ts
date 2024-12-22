@@ -2,8 +2,12 @@ import { year2024day3 } from '../challenges/year2024day3';
 
 describe('year2024day3 Class', () => {
   let instance: year2024day3;
-let input1 = [`xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))`];
-let input2 = [`xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`];
+  const input1 = [
+    `xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))`,
+  ];
+  const input2 = [
+    `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`,
+  ];
 
   beforeEach(() => {
     instance = new year2024day3();
@@ -18,7 +22,9 @@ let input2 = [`xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?m
       instance.preChallenge();
 
       // Assert
-      expect(instance.memory).toBe('xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))');
+      expect(instance.memory).toBe(
+        'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))'
+      );
     });
   });
 
@@ -32,12 +38,12 @@ let input2 = [`xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?m
       const result = instance.part1();
 
       // Assert
-      expect(result).toBe('Results of multiplications: 161'); 
+      expect(result).toBe('Results of multiplications: 161');
     });
 
     it('should return 0 for memory with no valid multiplications', () => {
       // Arrange
-      instance.input = ['add(2,3)', "sub(4,5)"];
+      instance.input = ['add(2,3)', 'sub(4,5)'];
       instance.preChallenge();
 
       // Act
@@ -58,7 +64,7 @@ let input2 = [`xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?m
       const result = instance.part2();
 
       // Assert
-      expect(result).toBe('Results of just enabled multiplications: 48'); 
+      expect(result).toBe('Results of just enabled multiplications: 48');
     });
 
     it('should handle cases with no enabled multiplications', () => {
@@ -75,9 +81,7 @@ let input2 = [`xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?m
 
     it('should process input with multiple "do()" segments', () => {
       // Arrange
-      instance.input = [
-        "do()mul(4,5)don't()mul(6,7)do()mul(8,9)"
-      ];
+      instance.input = ["do()mul(4,5)don't()mul(6,7)do()mul(8,9)"];
       instance.preChallenge();
 
       // Act
@@ -94,7 +98,7 @@ let input2 = [`xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?m
       const result = instance.calculate(input1[0]);
 
       // Assert
-      expect(result).toBe(2*4 + 5*5 + 11*8 + 8*5); // 8 + 25 + 88 + 40 = 161
+      expect(result).toBe(2 * 4 + 5 * 5 + 11 * 8 + 8 * 5); // 8 + 25 + 88 + 40 = 161
     });
 
     it('should return 0 if no valid multiplications are found', () => {

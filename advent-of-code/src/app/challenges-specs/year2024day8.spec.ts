@@ -1,5 +1,5 @@
 import { year2024day8 } from '../challenges/year2024day8';
-import { Point } from '../helpers/point';
+import { Point } from '../models/point';
 
 describe('year2024day8', () => {
     let dayInstance: year2024day8;
@@ -39,7 +39,7 @@ describe('year2024day8', () => {
   
     describe('preChallenge', () => {
       it('should collect antennas correctly from the input', () => {
-        const expected: { [key: string]: Point[] } = {
+        const expected: Record<string, Point[]> = {
           '0': [
             [1, 8],
             [2, 5],

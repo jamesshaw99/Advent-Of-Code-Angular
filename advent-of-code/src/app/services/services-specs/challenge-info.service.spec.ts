@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { ChallengeInfoService } from '../challenge-info.service';
 import { provideHttpClient } from '@angular/common/http';
+import { ChallengeInfo } from '../../models/ChallengeInfo';
 
 describe('ChallengeInfoService', () => {
   let service: ChallengeInfoService;
@@ -24,17 +25,17 @@ describe('ChallengeInfoService', () => {
   });
 
   afterEach(() => {
-    const requests = httpMock.match((req) => true);
+    const requests = httpMock.match(() => true);
     expect(requests.length).toBe(0, 'There are outstanding HTTP requests!');
   });
 
   describe('getChallengeInfo', () => {
     it('should fetch challenge info', () => {
-      const mockResponse = {
-        Title: 'Challenge 1',
-        part1Description: ['Part 1'],
-        part2Description: ['Part 2'],
-      };
+      const mockResponse = new ChallengeInfo(
+        'Challenge 1',
+        ['Part 1'],
+        ['Part 2'],
+      );
 
       service.getChallengeInfo(2024, 1).subscribe((data) => {
         expect(data).toEqual(mockResponse);
@@ -46,11 +47,11 @@ describe('ChallengeInfoService', () => {
     });
 
     it('should handle error when fetching challenge info', () => {
-      const defaultResponse = {
-        Title: 'No data found',
-        part1Description: [],
-        part2Description: [],
-      };
+      const defaultResponse = new ChallengeInfo(
+        'No data found',
+        [],
+        [],
+      );
 
       service.getChallengeInfo(2024, 1).subscribe((data) => {
         expect(data).toEqual(defaultResponse);

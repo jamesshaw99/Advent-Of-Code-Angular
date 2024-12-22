@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
@@ -10,8 +10,8 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
   templateUrl: './year.component.html',
   styleUrl: './year.component.css',
 })
-export class YearComponent {
-  year: number = 0;
+export class YearComponent implements OnInit {
+  year = 0;
   dailyResults: { day: number; part1: string; part2: string; title: string }[] =
     [];
 
@@ -31,7 +31,7 @@ export class YearComponent {
         this.cdr.detach();
         subject.subscribe({
           next: (data) => {
-            var days = data.length;
+            const days = data.length;
             this.challengeInfoService
               .getChallengeTitles(this.year, days)
               .subscribe((titles) => {

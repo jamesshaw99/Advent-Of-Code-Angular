@@ -1,7 +1,7 @@
 import { day } from '../helpers/day';
 
 export class year2024day5 extends day {
-    private orderRules: Map<number, Set<number>> = new Map();
+    private orderRules = new Map<number, Set<number>>();
     private updates: number[][] = [];
 
   override part1(): string {
@@ -52,7 +52,7 @@ export class year2024day5 extends day {
   }
 
   isOrdered(update: number[]): boolean {
-    const pageIndex: Map<number, number> = new Map();
+    const pageIndex = new Map<number, number>();
     update.forEach((page, index) => pageIndex.set(page, index));
 
     for (const [pageX, nextPages] of this.orderRules.entries()) {
@@ -70,8 +70,8 @@ export class year2024day5 extends day {
   }
 
   topologicalSort(update: number[]): number[] {
-    const inDegree: Map<number, number> = new Map();
-    const graph: Map<number, Set<number>> = new Map();
+    const inDegree = new Map<number, number>();
+    const graph = new Map<number, Set<number>>();
 
     update.forEach((page) => {
       graph.set(page, new Set());

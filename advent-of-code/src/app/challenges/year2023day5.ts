@@ -2,7 +2,7 @@ import { day } from '../helpers/day';
 
 export class year2023day5 extends day {
   private seeds: number[] = [];
-  private maps: Array<Array<number[]>> = [];
+  private maps: number[][][] = [];
 
   override part1(): string {
     let location = Number.MAX_VALUE;

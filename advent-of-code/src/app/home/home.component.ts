@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { RunnerService } from '../services/runner.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   years: number[] = [];
   constructor(private runnerService: RunnerService) {}
 

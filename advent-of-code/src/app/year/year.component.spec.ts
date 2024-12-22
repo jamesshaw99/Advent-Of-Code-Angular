@@ -4,13 +4,14 @@ import { RunnerService } from '../services/runner.service';
 import { ChallengeInfoService } from '../services/challenge-info.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
+import { RunnerResults } from '../models/RunnerResults';
 
 describe('YearComponent', () => {
   let component: YearComponent;
   let fixture: ComponentFixture<YearComponent>;
   let mockRunnerService: jasmine.SpyObj<RunnerService>;
   let mockChallengeInfoService: jasmine.SpyObj<ChallengeInfoService>;
-  let mockActivatedRoute: any;
+  let mockActivatedRoute: Partial<ActivatedRoute>;
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
@@ -45,7 +46,7 @@ describe('YearComponent', () => {
   describe('ngOnInit', () => {
     it('should set the year from route parameters', fakeAsync(() => {
       // Arrange
-      const mockSubject = new Subject<any[]>();
+      const mockSubject = new Subject<RunnerResults[]>();
       mockRunnerService.runAllChallenges.and.returnValue(Promise.resolve(mockSubject));
       mockChallengeInfoService.getChallengeTitles.and.returnValue(of([]));
 
@@ -68,7 +69,7 @@ describe('YearComponent', () => {
         { day: 1, title: 'Challenge Day 1' },
         { day: 2, title: 'Challenge Day 2' },
       ];
-      const mockSubject = new Subject<any[]>();
+      const mockSubject = new Subject<RunnerResults[]>();
 
       mockRunnerService.runAllChallenges.and.returnValue(Promise.resolve(mockSubject));
       mockChallengeInfoService.getChallengeTitles.and.returnValue(of(mockTitles));
@@ -93,7 +94,7 @@ describe('YearComponent', () => {
         { day: 1, part1: 'Result 1A', part2: 'Result 1B' },
       ];
       const mockTitles: { day: number; title: string; }[] = [];
-      const mockSubject = new Subject<any[]>();
+      const mockSubject = new Subject<RunnerResults[]>();
 
       mockRunnerService.runAllChallenges.and.returnValue(Promise.resolve(mockSubject));
       mockChallengeInfoService.getChallengeTitles.and.returnValue(of(mockTitles));

@@ -1,22 +1,28 @@
 export class day {
-    input: string[] = [];
+  input: string[] = [];
+  run: (input: string[]) => { part1: string; part2: string };
 
-    run(input: string[]): { part1: string; part2: string; }{
-        this.input = input;
-        this.preChallenge();
-        return{
-            part1: this.part1(),
-            part2: this.part2()
-        }
-    }
+  // Constructor that allows injecting a mock or custom run function
+  constructor(run?: (input: string[]) => { part1: string; part2: string }) {
+    this.run = run || this.defaultRun;
+  }
 
-    preChallenge(){}
+  private defaultRun(input: string[]): { part1: string; part2: string } {
+    this.input = input;
+    this.preChallenge();
+    return {
+      part1: this.part1(),
+      part2: this.part2(),
+    };
+  }
 
-    part1(){
-        return 'not implemented';
-    }
+  preChallenge() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
-    part2(){
-        return 'not implemented';
-    }
+  part1() {
+    return 'not implemented';
+  }
+
+  part2() {
+    return 'not implemented';
+  }
 }

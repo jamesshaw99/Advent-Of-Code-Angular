@@ -2,13 +2,15 @@ import { year2024day2 } from '../challenges/year2024day2';
 
 describe('year2024day2 Class', () => {
   let instance: year2024day2;
-  
-  let input: string[] = ['7 6 4 2 1',
-'1 2 7 8 9',
-'9 7 6 2 1',
-'1 3 2 4 5',
-'8 6 4 4 1',
-'1 3 6 7 9'];
+
+  const input: string[] = [
+    '7 6 4 2 1',
+    '1 2 7 8 9',
+    '9 7 6 2 1',
+    '1 3 2 4 5',
+    '8 6 4 4 1',
+    '1 3 6 7 9',
+  ];
 
   beforeEach(() => {
     instance = new year2024day2();
@@ -22,7 +24,7 @@ describe('year2024day2 Class', () => {
       const result = instance.part1();
 
       // Assert
-      expect(result).toBe('Number of safe reports: 2'); 
+      expect(result).toBe('Number of safe reports: 2');
     });
   });
 
@@ -32,7 +34,7 @@ describe('year2024day2 Class', () => {
       const result = instance.part2();
 
       // Assert
-      expect(result).toBe('Number of safe reports with dampener: 4'); 
+      expect(result).toBe('Number of safe reports with dampener: 4');
     });
   });
 
@@ -116,7 +118,6 @@ describe('year2024day2 Class', () => {
       expect(result).toBeTrue();
     });
   });
-
 
   describe('edge cases', () => {
     it('should handle an empty input list gracefully in part1', () => {

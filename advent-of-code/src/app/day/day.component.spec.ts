@@ -1,8 +1,6 @@
 import {
   ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick
+  TestBed
 } from '@angular/core/testing';
 import { DayComponent } from './day.component';
 import { RunnerService } from '../services/runner.service';
@@ -15,7 +13,7 @@ describe('DayComponent', () => {
   let fixture: ComponentFixture<DayComponent>;
   let mockRunnerService: jasmine.SpyObj<RunnerService>;
   let mockChallengeInfoService: jasmine.SpyObj<ChallengeInfoService>;
-  let mockActivatedRoute: any;
+  let mockActivatedRoute: Partial<ActivatedRoute>;
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {

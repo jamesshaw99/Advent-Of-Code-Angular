@@ -43,7 +43,7 @@ export class year2024day4 extends day {
 
     for (let r = 0; r < numRows; r++) {
       for (let c = 0; c < numCols; c++) {
-        for (let [dr, dc] of directions) {
+        for (const [dr, dc] of directions) {
           if (canFindWord(r, c, dr, dc)) {
             count++;
           }
@@ -55,7 +55,7 @@ export class year2024day4 extends day {
   }
 
   override part2(): string {
-    let count: number = 0;
+    let count = 0;
 
     for (let i = 0; i < this.input.length; i++) {
         for (let j = 0; j < this.input[i].length; j++) {

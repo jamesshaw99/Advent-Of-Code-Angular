@@ -1,7 +1,7 @@
 export class Symbol {
-  private x: number = 0;
-  private y: number = 0;
-  private val: string = '';
+  private x = 0;
+  private y = 0;
+  private val = '';
 
   constructor(x: number, y: number, val: string) {
     this.x = x;

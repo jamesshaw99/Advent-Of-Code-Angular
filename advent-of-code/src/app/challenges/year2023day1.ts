@@ -15,7 +15,7 @@ export class year2023day1 extends day {
   }
 
   private modifyInput(input: string[]): string[] {
-    const map: { [key: string]: string } = {
+    const map: Record<string, string> = {
       one: 'o1e',
       two: 't2',
       three: '3e',
@@ -39,7 +39,7 @@ export class year2023day1 extends day {
 
   private setValues(strings: string[]): void {
     this.values = [];
-    for (let line of strings) {
+    for (const line of strings) {
       const allMatches: string[] = [];
       const regex = /(\d)/g;
       let match;

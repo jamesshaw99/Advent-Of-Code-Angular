@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
@@ -10,7 +10,7 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
   templateUrl: './day.component.html',
   styleUrl: './day.component.css',
 })
-export class DayComponent {
+export class DayComponent implements OnInit{
   year!: number;
   day!: number;
   result: { part1: string; part2: string } | null = null;

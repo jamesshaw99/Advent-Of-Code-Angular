@@ -3,7 +3,7 @@ import { year2024day1 } from '../challenges/year2024day1';
 describe('year2024day1 Class', () => {
   let instance: year2024day1;
 
-  let input: string[] = ['3   4', '4   3', '2   5', '1   3', '3   9', '3   3'];
+  const input: string[] = ['3   4', '4   3', '2   5', '1   3', '3   9', '3   3'];
 
   beforeEach(() => {
     instance = new year2024day1();
