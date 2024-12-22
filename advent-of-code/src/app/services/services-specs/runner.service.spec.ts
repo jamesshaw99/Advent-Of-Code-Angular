@@ -46,7 +46,7 @@ describe('RunnerService', () => {
   ];
 
   beforeEach(() => {
-    inputService = jasmine.createSpyObj('InputService', ['loadInputFromFile']);
+    inputService = jasmine.createSpyObj('InputService', ['loadInput']);
 
     TestBed.configureTestingModule({
       providers: [
@@ -209,7 +209,7 @@ describe('RunnerService', () => {
       const mockWorkerResponse = { part1: 'Result 1', part2: 'Result 2' }; // Worker response
 
       // Mock the observable from the input service
-      inputService.loadInputFromFile.and.returnValue(of(mockInput));
+      inputService.loadInput.and.returnValue(of(mockInput));
 
       // Create a spy for the Web Worker and mock its behavior
       const workerSpy = jasmine.createSpyObj('Worker', [
@@ -238,7 +238,7 @@ describe('RunnerService', () => {
       const mockInput = ['mock input data']; // Your mock input data
 
       // Mock the observable from the input service
-      inputService.loadInputFromFile.and.returnValue(of(mockInput));
+      inputService.loadInput.and.returnValue(of(mockInput));
 
       // Create a spy for the Web Worker and mock its behavior
       const workerSpy = jasmine.createSpyObj('Worker', [

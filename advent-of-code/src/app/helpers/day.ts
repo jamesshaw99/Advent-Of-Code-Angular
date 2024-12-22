@@ -1,13 +1,12 @@
 export class day {
     input: string[] = [];
 
-    run(input: string[]): { part1: string; part2: string; input: string[] }{
+    run(input: string[]): { part1: string; part2: string; }{
         this.input = input;
         this.preChallenge();
         return{
             part1: this.part1(),
-            part2: this.part2(),
-            input: this.input
+            part2: this.part2()
         }
     }
 

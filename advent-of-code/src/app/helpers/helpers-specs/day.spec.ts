@@ -29,8 +29,7 @@ describe('day Class', () => {
     expect(instance.part2).toHaveBeenCalled();
     expect(result).toEqual({
       part1: 'result1',
-      part2: 'result2',
-      input,
+      part2: 'result2'
     });
   });
 

@@ -24,8 +24,8 @@ describe('InputService', () => {
     httpMock.verify();
   });
 
-  describe('loadInputFromFile', () => {
-    it('should load input from file and split into trimmed lines', () => {
+  describe('loadInput', () => {
+    it('should load input from http call and split into trimmed lines', () => {
       // Arrange
       const mockText = 'line1\nline2\nline3';
       const mockResponse = ['line1', 'line2', 'line3'];
@@ -33,12 +33,12 @@ describe('InputService', () => {
       const day = 5;
 
       // Act
-      service.loadInputFromFile(year, day).subscribe(data => {
+      service.loadInput(year, day).subscribe(data => {
         // Assert
         expect(data).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(`${year}/day${day}.txt`);
+      const req = httpMock.expectOne(`http://localhost:3000/challenge/2023/5`);
       expect(req.request.method).toBe('GET');
       req.flush(mockText);
     });
@@ -51,12 +51,12 @@ describe('InputService', () => {
       const day = 5;
 
       // Act
-      service.loadInputFromFile(year, day).subscribe(data => {
+      service.loadInput(year, day).subscribe(data => {
         // Assert
         expect(data).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(`${year}/day${day}.txt`);
+      const req = httpMock.expectOne(`http://localhost:3000/challenge/2023/5`);
       expect(req.request.method).toBe('GET');
       req.flush(mockText);
     });
@@ -69,12 +69,12 @@ describe('InputService', () => {
       const day = 5;
 
       // Act
-      service.loadInputFromFile(year, day).subscribe(data => {
+      service.loadInput(year, day).subscribe(data => {
         // Assert
         expect(data).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(`${year}/day${day}.txt`);
+      const req = httpMock.expectOne(`http://localhost:3000/challenge/2023/5`);
       expect(req.request.method).toBe('GET');
       req.flush(mockText);
     });

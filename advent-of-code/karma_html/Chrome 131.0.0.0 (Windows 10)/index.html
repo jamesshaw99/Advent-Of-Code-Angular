@@ -94,7 +94,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </head>
 
 <body id="HTMLReporter" class="html-reporter">
-<h1>Tested in Chrome 131.0.0.0 (Windows 10) on Wed Dec 18 2024</h1>
+<h1>Tested in Chrome 131.0.0.0 (Windows 10) on Sun Dec 22 2024</h1>
 
 <div class="alert">
 
@@ -102,7 +102,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 
   
   <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
-  <a href="#" onclick="unfold();">Unfold</a></span>106 specs, 0 failed, 0 pending</span>
+  <a href="#" onclick="unfold();">Unfold</a></span>113 specs, 0 failed, 0 pending</span>
   
 
 
@@ -115,10 +115,31 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
   
   
     <div class="suite passed">
-      <span class="description">DayComponent</span>
+      <span class="description">year2024day4 part1</span>
     
       <div class="specSummary passed">
-      <span class="description">should create</span>
+      <span class="description">should count occurrences of the word &quot;XMAS&quot; in all directions</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return 0 if the word &quot;XMAS&quot; is not present</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle input with multiple occurrences in different orientations</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day4 part2</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should count occurrences of &quot;X-MAS&quot; patterns</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return 0 if there are no &quot;X-MAS&quot; patterns</span>
       </div>
     
     </div>
@@ -134,10 +155,6 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
       <span class="description">should run challenge on init</span>
       </div>
     
-      <div class="specSummary passed">
-      <span class="description">should handle errors from runChallenge</span>
-      </div>
-    
     </div>
   
     <div class="suite passed">
@@ -150,14 +167,94 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
-      <span class="description">PartNo Class</span>
+      <span class="description">DayComponent</span>
     
       <div class="specSummary passed">
-      <span class="description">should return false if a Symbol is too far from the PartNo</span>
+      <span class="description">should create</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 simulateWithObstacle</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly simulate with a given obstruction</span>
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should append a number to the existing number</span>
+      <span class="description">should return false if no loop detected</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 part2</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly calculate the number of obstruction points to cause a loop</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 part1</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly calculate the number of distinct positions visited</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 preChallenge</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly initialize the challenge</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 canMoveForward</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if guard is out of map</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 markVisited</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should mark location with an 'x'</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day6 findGuard</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should throw error when guard not found</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the location of the guard</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">PartNo Class</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly handle decimal numbers in the number string</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if a Symbol is too far from the PartNo</span>
       </div>
     
       <div class="specSummary passed">
@@ -165,7 +262,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should correctly handle decimal numbers in the number string</span>
+      <span class="description">should append a number to the existing number</span>
       </div>
     
       <div class="specSummary passed">
@@ -175,238 +272,27 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day5 part2</span>
+      <span class="description">year2024day3 Class Edge Cases</span>
     
       <div class="specSummary passed">
-      <span class="description">should calculate the sum of middle pages for reordered updates</span>
+      <span class="description">should handle empty input gracefully</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle extremely large inputs</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle memory with no valid patterns</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day5 part1</span>
+      <span class="description">year2024day3 Class preChallenge</span>
     
       <div class="specSummary passed">
-      <span class="description">should calculate the sum of middle pages for ordered updates</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day5 topologicalSort</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should sort an unordered update correctly</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return the original order for an already ordered update</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day5 isOrdered</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true for an ordered update</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false for an unordered update</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day5 preChallenge</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should parse order rules and updates correctly</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">AppComponent html</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should dynamically generate navigation links based on years</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should render the navbar with correct brand title</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">AppComponent</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should have title 'advent-of-code'</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should create the component</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Game Class</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should calculate power correctly</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should only update to the maximum values for red, green, and blue</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return a power of 0 if any color value is 0</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should initialize with correct game number</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should update red, green, and blue correctly</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should initialize red, green, and blue to 0</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">RunnerService runAllChallenges</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should run all challenges for a given year</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">RunnerService runChallenge</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return a default message if no challenge is implemented</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return challenge result for a specific day and year</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">RunnerService initializeChallenges</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should initialize challenges from challengeInstances</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">RunnerService getYears</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return years with challenges</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">RunnerService runChallengeWithWorker</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should reject when worker encounters an error</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should resolve challenge data when worker posts message</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day1 Class preChallenge</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should parse input correctly in preChallenge</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day1 Class challenges</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should calculate total distance correctly in part1</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should calculate similarity score correctly in part2</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day1 Class Helper Methods</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle edge cases with empty lists in total distance</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should calculate total distance in calculateTotalDistance</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should calculate similarity score in calculateSimilarityScore</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle edge cases with empty lists in similarity score</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Symbol Class</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle numerical strings in val correctly</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle negative coordinates correctly</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return the correct y value</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return the correct val value</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should initialize with correct x, y, and val values</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return the correct x value</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle empty val correctly</span>
+      <span class="description">should correctly concatenate input into memory</span>
       </div>
     
     </div>
@@ -425,23 +311,14 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day3 Class preChallenge</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should correctly concatenate input into memory</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
       <span class="description">year2024day3 Class part2</span>
     
       <div class="specSummary passed">
-      <span class="description">should handle cases with no enabled multiplications</span>
+      <span class="description">should process input with multiple &quot;do()&quot; segments</span>
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should process input with multiple &quot;do()&quot; segments</span>
+      <span class="description">should handle cases with no enabled multiplications</span>
       </div>
     
       <div class="specSummary passed">
@@ -454,37 +331,334 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
       <span class="description">year2024day3 Class calculate</span>
     
       <div class="specSummary passed">
-      <span class="description">should correctly calculate sum of multiplications from a string</span>
-      </div>
-    
-      <div class="specSummary passed">
       <span class="description">should return 0 if no valid multiplications are found</span>
       </div>
     
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day3 Class Edge Cases</span>
-    
       <div class="specSummary passed">
-      <span class="description">should handle extremely large inputs</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle memory with no valid patterns</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle empty input gracefully</span>
+      <span class="description">should correctly calculate sum of multiplications from a string</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">YearComponent</span>
+      <span class="description">year2024day7</span>
     
       <div class="specSummary passed">
-      <span class="description">should create the component</span>
+      <span class="description">should correctly evaluate expressions with ||</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should generate all operator combinations correctly</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly evaluate expressions with + and *</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate part2 correctly</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate part1 correctly</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day1 Class Helper Methods</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle edge cases with empty lists in similarity score</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle edge cases with empty lists in total distance</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate similarity score in calculateSimilarityScore</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate total distance in calculateTotalDistance</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day1 Class challenges</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate total distance correctly in part1</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate similarity score correctly in part2</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day1 Class preChallenge</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should parse input correctly in preChallenge</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">HomeComponent ngOnInit</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should load years on ngOnInit</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should render years in the HTML</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">HomeComponent html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should generate correct link for each year</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">HomeComponent</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day8 part1</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the correct number of unique antinode locations</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day8 processAntennas</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly calculate antinode positions</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day8 collectAntennas</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should collect antennas correctly from the grid</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Game Class</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate power correctly</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should only update to the maximum values for red, green, and blue</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should update red, green, and blue correctly</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should initialize red, green, and blue to 0</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a power of 0 if any color value is 0</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should initialize with correct game number</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day2 Class part2</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly count the number of safe reports with dampener</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day2 Class part1</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should correctly count the number of safe reports</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day2 Class isSafeReport</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false for a report with mixed increasing and decreasing differences</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false for a report with invalid differences</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true for a report with strictly decreasing valid differences</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true for a report with strictly increasing valid differences</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day2 Class isSafeWithDampener</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if the original report is already safe</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if no single removal can make the report safe</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if removing one level makes the report safe</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day2 Class edge cases</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle single-element reports</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle an empty input list gracefully in part2</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle an empty input list gracefully in part1</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">day Class</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return &quot;not implemented&quot; for part1 by default</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should update input and call methods in run()</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return &quot;not implemented&quot; for part2 by default</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should not throw an error in preChallenge()</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should initialize with an empty input array</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day5 topologicalSort</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the original order for an already ordered update</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should sort an unordered update correctly</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day5 part1</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate the sum of middle pages for ordered updates</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day5 part2</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should calculate the sum of middle pages for reordered updates</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day5 preChallenge</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should parse order rules and updates correctly</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">year2024day5 isOrdered</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true for an ordered update</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false for an unordered update</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">InputService loadInput</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle file with empty lines and return them</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should load input from http call and split into trimmed lines</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should handle empty file and return empty array</span>
       </div>
     
     </div>
@@ -516,145 +690,122 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day6 simulateWithObstacle</span>
+      <span class="description">YearComponent</span>
     
       <div class="specSummary passed">
-      <span class="description">should return false if no loop detected</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should correctly simulate with a given obstruction</span>
+      <span class="description">should create the component</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day6 part2</span>
+      <span class="description">AppComponent</span>
     
       <div class="specSummary passed">
-      <span class="description">should correctly calculate the number of obstruction points to cause a loop</span>
+      <span class="description">should create the component</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should have title 'advent-of-code'</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day6 findGuard</span>
+      <span class="description">AppComponent html</span>
     
       <div class="specSummary passed">
-      <span class="description">should throw error when guard not found</span>
+      <span class="description">should dynamically generate navigation links based on years</span>
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should return the location of the guard</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day6 canMoveForward</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if guard is out of map</span>
+      <span class="description">should render the navbar with correct brand title</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day6 part1</span>
+      <span class="description">RunnerService runAllChallenges</span>
     
       <div class="specSummary passed">
-      <span class="description">should correctly calculate the number of distinct positions visited</span>
+      <span class="description">should run all challenges for a given year</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day6 markVisited</span>
+      <span class="description">RunnerService getYears</span>
     
       <div class="specSummary passed">
-      <span class="description">should mark location with an 'x'</span>
+      <span class="description">should return years with challenges</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">year2024day6 preChallenge</span>
+      <span class="description">RunnerService initializeChallenges</span>
     
       <div class="specSummary passed">
-      <span class="description">should correctly initialize the challenge</span>
+      <span class="description">should initialize challenges from challengeInstances</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">InputService loadInputFromFile</span>
+      <span class="description">RunnerService runChallengeWithWorker</span>
     
       <div class="specSummary passed">
-      <span class="description">should handle file with empty lines and return them</span>
+      <span class="description">should reject when worker encounters an error</span>
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should handle empty file and return empty array</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should load input from file and split into trimmed lines</span>
+      <span class="description">should resolve challenge data when worker posts message</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">day Class</span>
+      <span class="description">RunnerService runChallenge</span>
     
       <div class="specSummary passed">
-      <span class="description">should update input and call methods in run()</span>
+      <span class="description">should return challenge result for a specific day and year</span>
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should return &quot;not implemented&quot; for part2 by default</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should initialize with an empty input array</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return &quot;not implemented&quot; for part1 by default</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should not throw an error in preChallenge()</span>
+      <span class="description">should return a default message if no challenge is implemented</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">HomeComponent ngOnInit</span>
+      <span class="description">Symbol Class</span>
     
       <div class="specSummary passed">
-      <span class="description">should render years in the HTML</span>
+      <span class="description">should handle empty val correctly</span>
       </div>
     
       <div class="specSummary passed">
-      <span class="description">should load years on ngOnInit</span>
+      <span class="description">should handle negative coordinates correctly</span>
       </div>
     
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">HomeComponent</span>
-    
       <div class="specSummary passed">
-      <span class="description">should create</span>
+      <span class="description">should handle numerical strings in val correctly</span>
       </div>
     
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">HomeComponent html</span>
+      <div class="specSummary passed">
+      <span class="description">should return the correct x value</span>
+      </div>
     
       <div class="specSummary passed">
-      <span class="description">should generate correct link for each year</span>
+      <span class="description">should initialize with correct x, y, and val values</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the correct val value</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the correct y value</span>
       </div>
     
     </div>
@@ -676,114 +827,11 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
       <span class="description">ChallengeInfoService getChallengeInfo</span>
     
       <div class="specSummary passed">
-      <span class="description">should fetch challenge info</span>
-      </div>
-    
-      <div class="specSummary passed">
       <span class="description">should handle error when fetching challenge info</span>
       </div>
     
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day2 Class isSafeReport</span>
-    
       <div class="specSummary passed">
-      <span class="description">should return false for a report with mixed increasing and decreasing differences</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true for a report with strictly decreasing valid differences</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false for a report with invalid differences</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true for a report with strictly increasing valid differences</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day2 Class part2</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should correctly count the number of safe reports with dampener</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day2 Class isSafeWithDampener</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if the original report is already safe</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if no single removal can make the report safe</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if removing one level makes the report safe</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day2 Class edge cases</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle single-element reports</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle an empty input list gracefully in part1</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle an empty input list gracefully in part2</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day2 Class part1</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should correctly count the number of safe reports</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day4 part2</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return 0 if there are no &quot;X-MAS&quot; patterns</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should count occurrences of &quot;X-MAS&quot; patterns</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">year2024day4 part1</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return 0 if the word &quot;XMAS&quot; is not present</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should handle input with multiple occurrences in different orientations</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should count occurrences of the word &quot;XMAS&quot; in all directions</span>
+      <span class="description">should fetch challenge info</span>
       </div>
     
     </div>

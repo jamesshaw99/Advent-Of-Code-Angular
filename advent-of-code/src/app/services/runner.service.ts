@@ -94,7 +94,7 @@ export class RunnerService {
         reject(err.message);
         worker.terminate();
       };
-      this.inputService.loadInputFromFile(year, day).subscribe((input) => {
+      this.inputService.loadInput(year, day).subscribe((input) => {
         worker.postMessage({ year, day, input });
       });
     });

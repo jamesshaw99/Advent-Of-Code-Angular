@@ -41,7 +41,7 @@ describe('AppComponent', () => {
     it('should render the navbar with correct brand title', () => {
       const compiled = fixture.nativeElement as HTMLElement;
       const navbarBrand = compiled.querySelector('.navbar-brand');
-      expect(navbarBrand?.textContent).toContain('Advent of Code');
+      expect(navbarBrand?.textContent).toContain('🎄 Advent Of Code 🎄');
     });
 
     it('should dynamically generate navigation links based on years', () => {

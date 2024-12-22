@@ -6,15 +6,19 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
 @Component({
   selector: 'app-day',
   standalone: false,
-  
+
   templateUrl: './day.component.html',
-  styleUrl: './day.component.css'
+  styleUrl: './day.component.css',
 })
 export class DayComponent {
   year!: number;
   day!: number;
-  result: { part1: string; part2: string; } | null = null;
-  challengeInfo: {title: string, part1Description: string[], part2Description: string[]} | null = null;
+  result: { part1: string; part2: string } | null = null;
+  challengeInfo: {
+    title: string;
+    part1Description: string[];
+    part2Description: string[];
+  } | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,20 +28,24 @@ export class DayComponent {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe(async (params) => {
       this.year = +params['year'];
       this.day = +params['day'];
-
-      this.challengeInfoService.getChallengeInfo(this.year, this.day).subscribe(data => {
-        this.challengeInfo = data;
-      });
-
-      this.runnerService.runChallenge(this.year, this.day).then((data) => {
-        this.result = data;
-      }).catch((error) => {
-        console.error("Error running challenge:", error);
-      });
       
+      this.challengeInfoService
+        .getChallengeInfo(this.year, this.day)
+        .subscribe((data) => {
+          this.challengeInfo = data;
+        });
+
+      this.runnerService
+        .runChallenge(this.year, this.day)
+        .then((data) => {
+          this.result = data;
+        })
+        .catch((error) => {
+          console.error(`Error running challenge: ${error.message}`);
+        });
     });
   }
 
