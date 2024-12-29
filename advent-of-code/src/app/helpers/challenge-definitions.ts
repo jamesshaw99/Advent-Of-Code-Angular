@@ -12,6 +12,7 @@ import { year2024day5 } from '../challenges/year2024day5';
 import { year2024day6 } from '../challenges/year2024day6';
 import { year2024day7 } from '../challenges/year2024day7';
 import { year2024day8 } from '../challenges/year2024day8';
+import { year2024day9 } from '../challenges/year2024day9';
 
 export const challengeInstances = [
 { year: 2023, day: 1, instance: new year2023day1() },
@@ -26,5 +27,6 @@ export const challengeInstances = [
 { year: 2024, day: 5, instance: new year2024day5() },
 { year: 2024, day: 6, instance: new year2024day6() },
 { year: 2024, day: 7, instance: new year2024day7() },
-{ year: 2024, day: 8, instance: new year2024day8() }
+{ year: 2024, day: 8, instance: new year2024day8() },
+{ year: 2024, day: 9, instance: new year2024day9() }
 ];

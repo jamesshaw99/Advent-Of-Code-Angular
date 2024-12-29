@@ -12,6 +12,7 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
 })
 export class YearComponent implements OnInit {
   year = 0;
+  noDays = 0;
   dailyResults: { day: number; part1: string; part2: string; title: string }[] =
     [];
 
@@ -26,6 +27,8 @@ export class YearComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.year = +params['year'];
+
+      this.noDays = this.challengeInfoService.getNumberOfDaysForYear(this.year);
   
       this.runnerService.runAllChallenges(this.year).then((subject) => {
         this.cdr.detach();

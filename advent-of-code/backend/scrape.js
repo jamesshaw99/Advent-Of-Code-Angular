@@ -7,8 +7,7 @@ async function scrapeChallengeData(year, day) {
   const cookies = [
     {
       name: "session",
-      value:
-        "REMOVED",
+      value: process.env.SESSION_KEY,
       domain: ".adventofcode.com",
       path: "/",
       httpOnly: true,

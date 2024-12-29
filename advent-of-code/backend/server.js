@@ -17,8 +17,9 @@ app.get('/challenge/:year/:day', (req, res) => {
 
   axios.get(`https://adventofcode.com/${year}/day/${day}/input`, {
     headers: {
-      'Cookie': `session=${sessionKey}`,
+      'Cookie': `session=${sessionKey}`
     },
+    responseType: 'text'
   })
   .then((response) => {
     const challengeData = response.data;

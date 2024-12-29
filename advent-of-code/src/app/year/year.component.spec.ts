@@ -17,7 +17,7 @@ describe('YearComponent', () => {
   beforeEach(async () => {
     // Mock dependencies
     mockRunnerService = jasmine.createSpyObj('RunnerService', ['runAllChallenges']);
-    mockChallengeInfoService = jasmine.createSpyObj('ChallengeInfoService', ['getChallengeTitles']);
+    mockChallengeInfoService = jasmine.createSpyObj('ChallengeInfoService', ['getChallengeTitles', 'getNumberOfDaysForYear']);
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
 
     mockActivatedRoute = { params: of({ year: 2023 }) };
@@ -49,6 +49,7 @@ describe('YearComponent', () => {
       const mockSubject = new Subject<RunnerResults[]>();
       mockRunnerService.runAllChallenges.and.returnValue(Promise.resolve(mockSubject));
       mockChallengeInfoService.getChallengeTitles.and.returnValue(of([]));
+      mockChallengeInfoService.getNumberOfDaysForYear.and.returnValue(25);
 
       // Act
       component.ngOnInit();
@@ -73,6 +74,7 @@ describe('YearComponent', () => {
 
       mockRunnerService.runAllChallenges.and.returnValue(Promise.resolve(mockSubject));
       mockChallengeInfoService.getChallengeTitles.and.returnValue(of(mockTitles));
+      mockChallengeInfoService.getNumberOfDaysForYear.and.returnValue(25);
 
       // Act
       component.ngOnInit();
@@ -98,6 +100,7 @@ describe('YearComponent', () => {
 
       mockRunnerService.runAllChallenges.and.returnValue(Promise.resolve(mockSubject));
       mockChallengeInfoService.getChallengeTitles.and.returnValue(of(mockTitles));
+      mockChallengeInfoService.getNumberOfDaysForYear.and.returnValue(25);
 
       // Act
       component.ngOnInit();
