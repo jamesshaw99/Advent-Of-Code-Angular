@@ -55,9 +55,6 @@ export class YearComponent implements OnInit {
                 this.completionPercentage = (this.dailyResults.length / this.noDays) * 100;
               });
           },
-          complete: () => {
-            console.log('subscription complete');
-          },
           error: (err) => {
             console.error('Subscription error:', err); // Log errors
           },

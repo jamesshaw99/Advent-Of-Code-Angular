@@ -20,6 +20,15 @@ describe('day Class', () => {
       spyOn(instance, 'part1').and.returnValue('result1');
       spyOn(instance, 'part2').and.returnValue('result2');
 
+      const mockPerformanceNow = jasmine.createSpy('performanceNow');
+      mockPerformanceNow.and.returnValues(
+        1000, // startPart1
+        1100, // endPart1
+        1200, // startPart2
+        1250 // endPart2
+      );
+      globalThis.performance = { now: mockPerformanceNow } as unknown as Performance;
+
       // Act
       const result = instance.run(input);
 
@@ -28,12 +37,11 @@ describe('day Class', () => {
       expect(instance.preChallenge).toHaveBeenCalled();
       expect(instance.part1).toHaveBeenCalled();
       expect(instance.part2).toHaveBeenCalled();
-      expect(result).toEqual({
-        part1: 'result1',
-        part2: 'result2',
-        timePart1: 0,
-        timePart2: 0,
-      });
+      expect(result.part1).toBe('result1');
+      expect(result.part2).toBe('result2');
+
+      expect(result.timePart1).toBeCloseTo(100.0, 2);
+      expect(result.timePart2).toBeCloseTo(50.0, 2);
     });
   });
 

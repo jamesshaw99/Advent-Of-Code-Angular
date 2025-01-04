@@ -4,7 +4,7 @@
       <div class="col-md-4 mb-3" *ngFor="let info of yearInfo">
         <div class="card">
           <div class="card-body text-center">
-            <h5 class="card-title">{{info.year}} [<span>{{info.days * 2}}<mat-icon>star</mat-icon></span>]</h5>
+            <h5 class="card-title">{{info.year}} [<span>{{info.stars}}<mat-icon>star</mat-icon></span>]</h5>
             <p class="card-text">Days completed: {{info.days}}/25</p>
             <a href="/year/{{info.year}}" class="btn btn-primary">View {{info.year}}</a>
           </div>

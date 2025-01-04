@@ -16,7 +16,7 @@ antennas: Record<string, Point[]> = {};
           if (!this.antennas[char]) {
             this.antennas[char] = [];
           }
-          this.antennas[char].push([row, col]);
+          this.antennas[char].push({x: row, y: col});
         }
       }
     }
@@ -53,11 +53,11 @@ antennas: Record<string, Point[]> = {};
     
     for (let i = 0; i < n; i++) {
       for (let j = i + 1; j < n; j++) {
-        const rowDiff = points[j][0] - points[i][0];
-        const colDiff = points[j][1] - points[i][1];
+        const rowDiff = points[j].x - points[i].x;
+        const colDiff = points[j].y - points[i].y;
 
-        let newRow = points[i][0] - rowDiff;
-        let newCol = points[i][1] - colDiff;
+        let newRow = points[i].x - rowDiff;
+        let newCol = points[i].y - colDiff;
         while(newRow >= 0 && newRow < this.input.length && newCol >= 0 && newCol < this.input[0].length) {
           antinodePositions.add(`${newRow},${newCol}`);
           if(!resonance){
@@ -67,8 +67,8 @@ antennas: Record<string, Point[]> = {};
           newCol -= colDiff;
         }
         
-        newRow = points[j][0] + rowDiff;
-        newCol = points[j][1] + colDiff;
+        newRow = points[j].x + rowDiff;
+        newCol = points[j].y + colDiff;
         while(newRow >= 0 && newRow < this.input.length && newCol >= 0 && newCol < this.input[0].length) {
           antinodePositions.add(`${newRow},${newCol}`);
           if(!resonance){
@@ -79,8 +79,8 @@ antennas: Record<string, Point[]> = {};
         }
 
         if(resonance){
-          antinodePositions.add(`${points[i][0]},${points[i][1]}`);
-          antinodePositions.add(`${points[j][0]},${points[j][1]}`);
+          antinodePositions.add(`${points[i].x},${points[i].y}`);
+          antinodePositions.add(`${points[j].x},${points[j].y}`);
         }
       }
     }

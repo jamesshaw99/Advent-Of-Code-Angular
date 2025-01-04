@@ -8,7 +8,7 @@ import { RunnerService } from './services/runner.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  yearInfo: {year: number, days: number}[] = [];
+  yearInfo: {year: number, days: number, stars: number}[] = [];
   snowflakeArray = Array(5).fill(0);
   title = 'advent-of-code';
   @ViewChildren('snowflake', { read: ElementRef }) snowflakes!: QueryList<ElementRef>;

@@ -9,7 +9,7 @@ import { RunnerService } from '../services/runner.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  yearInfo: {year: number, days: number}[] = [];
+  yearInfo: {year: number, days: number, stars: number}[] = [];
   constructor(private runnerService: RunnerService) {}
 
   ngOnInit(): void {
