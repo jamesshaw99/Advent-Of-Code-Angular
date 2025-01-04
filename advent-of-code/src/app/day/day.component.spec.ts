@@ -71,7 +71,7 @@ describe('DayComponent', () => {
       };
       mockChallengeInfoService.getChallengeInfo.and.returnValue(of(challengeInfo));
     
-      const result = { part1: 'Part 1 Result', part2: 'Part 2 Result' };
+      const result = { part1: 'Part 1 Result', part2: 'Part 2 Result', timePart1: 0, timePart2: 0 };
       mockRunnerService.runChallenge.and.returnValue(Promise.resolve(result));
     
       // Act

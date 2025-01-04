@@ -171,3 +171,29 @@ footer {
 .btn-primary:hover {
   background-color: var(--christmas-green);
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+pre {
+  background-color: #0f0f23;
+  margin: 1em 0
+}
+
+code {
+  color: var(--christmas-silver) !important;
+  background-color: #0f0f23;
+}
+
+em {
+  text-shadow: 0 0 5px var(--christmas-silver);
+  font-style: normal;
+}
+
+span {
+  color: var(--christmas-gold)
+}
+
+.mat-icon {
+  font-size: 1rem;
+  line-height: 2;
+}

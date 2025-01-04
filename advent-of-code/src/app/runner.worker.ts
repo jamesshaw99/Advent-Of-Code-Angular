@@ -12,8 +12,8 @@ addEventListener('message', async ({ data }) => {
       throw new Error(`Challenge for Year ${year}, Day ${day} not found.`);
     }
 
-    const { part1, part2 } = challenge.run(input);
-    postMessage({ part1, part2 });
+    const { part1, part2, timePart1, timePart2 } = challenge.run(input);
+    postMessage({ part1, part2, timePart1, timePart2 });
   }  catch (err: unknown) {
     if (err instanceof Error) {
       postMessage({ error: err.message, stack: err.stack });

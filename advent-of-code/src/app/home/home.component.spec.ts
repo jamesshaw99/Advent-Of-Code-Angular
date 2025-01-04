@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { RunnerService } from '../services/runner.service';
 import { By } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -11,10 +12,11 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     mockRunnerService = jasmine.createSpyObj('RunnerService', ['getYears']);
 
-    mockRunnerService.getYears.and.returnValue([2020, 2021, 2022]);
+    mockRunnerService.getYears.and.returnValue([{year: 2020, days:0}, {year: 2021, days:2}, {year:2022, days: 5}]);
 
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
+      imports: [MatIconModule],
       providers: [{ provide: RunnerService, useValue: mockRunnerService }],
     });
 
@@ -27,12 +29,12 @@ describe('HomeComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should load years on ngOnInit', () => {
+    it('should load yearInfo on ngOnInit', () => {
       // Act
       component.ngOnInit();
 
-      // Assert that years array is populated
-      expect(component.years).toEqual([2020, 2021, 2022]);
+      // Assert that yearInfo array is populated
+      expect(component.yearInfo).toEqual([{year: 2020, days:0}, {year: 2021, days:2}, {year:2022, days: 5}]);
     });
 
     it('should render years in the HTML', () => {
@@ -44,9 +46,9 @@ describe('HomeComponent', () => {
 
       // Assert
       expect(cardTitles.length).toBe(3);
-      expect(cardTitles[0].nativeElement.textContent).toBe('2020');
-      expect(cardTitles[1].nativeElement.textContent).toBe('2021');
-      expect(cardTitles[2].nativeElement.textContent).toBe('2022');
+      expect(cardTitles[0].nativeElement.textContent).toBe('2020 [0star]');
+      expect(cardTitles[1].nativeElement.textContent).toBe('2021 [4star]');
+      expect(cardTitles[2].nativeElement.textContent).toBe('2022 [10star]');
     });
   });
 

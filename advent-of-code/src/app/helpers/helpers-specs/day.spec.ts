@@ -11,25 +11,29 @@ describe('day Class', () => {
     expect(instance.input).toEqual([]);
   });
 
-  it('should update input and call methods in run()', () => {
-    // Arrange
-    const input = ['test input'];
+  describe('run', () => {
+    it('should update input and call methods', () => {
+      // Arrange
+      const input = ['test input'];
 
-    spyOn(instance, 'preChallenge').and.callThrough();
-    spyOn(instance, 'part1').and.returnValue('result1');
-    spyOn(instance, 'part2').and.returnValue('result2');
+      spyOn(instance, 'preChallenge').and.callThrough();
+      spyOn(instance, 'part1').and.returnValue('result1');
+      spyOn(instance, 'part2').and.returnValue('result2');
 
-    // Act
-    const result = instance.run(input);
+      // Act
+      const result = instance.run(input);
 
-    // Assert
-    expect(instance.input).toBe(input);
-    expect(instance.preChallenge).toHaveBeenCalled();
-    expect(instance.part1).toHaveBeenCalled();
-    expect(instance.part2).toHaveBeenCalled();
-    expect(result).toEqual({
-      part1: 'result1',
-      part2: 'result2'
+      // Assert
+      expect(instance.input).toBe(input);
+      expect(instance.preChallenge).toHaveBeenCalled();
+      expect(instance.part1).toHaveBeenCalled();
+      expect(instance.part2).toHaveBeenCalled();
+      expect(result).toEqual({
+        part1: 'result1',
+        part2: 'result2',
+        timePart1: 0,
+        timePart2: 0,
+      });
     });
   });
 

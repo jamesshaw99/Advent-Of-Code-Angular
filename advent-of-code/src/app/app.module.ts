@@ -10,6 +10,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { InputService } from './services/input.service';
 import { DayComponent } from './day/day.component';
 import { challengeInstances } from './helpers/challenge-definitions';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,15 @@ import { challengeInstances } from './helpers/challenge-definitions';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatProgressBarModule,
+    MatIconModule
   ],
   providers: [
     InputService,
     { provide: 'CHALLENGES', useValue: challengeInstances },
-    provideHttpClient()
+    provideHttpClient(),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

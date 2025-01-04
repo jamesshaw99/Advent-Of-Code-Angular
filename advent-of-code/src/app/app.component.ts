@@ -8,7 +8,7 @@ import { RunnerService } from './services/runner.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  years: number[] = [];
+  yearInfo: {year: number, days: number}[] = [];
   snowflakeArray = Array(5).fill(0);
   title = 'advent-of-code';
   @ViewChildren('snowflake', { read: ElementRef }) snowflakes!: QueryList<ElementRef>;
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(private runnerService: RunnerService) {}
 
   ngOnInit(): void {
-    this.years = this.runnerService.getYears();
+    this.yearInfo = this.runnerService.getYears();
   }
 
   ngAfterViewInit() {

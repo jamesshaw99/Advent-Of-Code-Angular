@@ -3,10 +3,11 @@ import { AppComponent } from './app.component';
 import { provideRouter, RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { RunnerService } from './services/runner.service';
+import { MatIconModule } from '@angular/material/icon';
 
 class MockRunnerService {
   getYears() {
-    return [2023, 2024];
+    return [{year: 2023, days: 5}, {year: 2024, days: 10}];
   }
 }
 
@@ -17,7 +18,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [RouterModule.forRoot([])],
+      imports: [RouterModule.forRoot([]), MatIconModule],
       providers: [
         provideRouter([]),
         { provide: RunnerService, useClass: MockRunnerService },
@@ -51,7 +52,7 @@ describe('AppComponent', () => {
       const linkTexts = links.map((link) =>
         link.nativeElement.textContent.trim()
       );
-      expect(linkTexts).toEqual(['2023', '2024']);
+      expect(linkTexts).toEqual(['2023 [10star]', '2024 [20star]']);
 
       const linkHrefs = links.map((link) =>
         link.nativeElement.getAttribute('href')

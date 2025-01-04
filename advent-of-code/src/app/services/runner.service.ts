@@ -4,21 +4,28 @@ import { Subject } from 'rxjs';
 import { challengeInstances } from '../helpers/challenge-definitions';
 import { day } from '../helpers/day';
 import { RunnerResults } from '../models/RunnerResults';
+import { ChallengeInfoService } from './challenge-info.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RunnerService {
-  challenges: Record<number, Record<number, {
+  challenges: Record<
+    number,
+    Record<
+      number,
+      {
         run: (input: string[]) => {
           part1: string;
           part2: string;
+          timePart1: number;
+          timePart2: number;
         };
-      }>> = {};
+      }
+    >
+  > = {};
 
-  constructor(
-    private inputService: InputService
-  ) {
+  constructor(private inputService: InputService, private challengeInfoService: ChallengeInfoService) {
     this.initializeChallenges(challengeInstances);
   }
 
@@ -35,54 +42,64 @@ export class RunnerService {
     }
   }
 
-  getYears(): number[] {
-    return Object.keys(this.challenges).map((year) => parseInt(year, 10));
+  getYears(): {year: number, days: number}[] {
+    return Object.keys(this.challenges).map((year) => {
+      const yearInt = parseInt(year, 10);      
+      const noDays = this.challengeInfoService.getNumberOfDaysForYear(yearInt);
+      return {year: yearInt, days: noDays};
+    });
   }
 
-  async runAllChallenges(
-    year: number
-  ): Promise<Subject<RunnerResults[]>> {
+  async runAllChallenges(year: number): Promise<Subject<RunnerResults>> {
     const days = Object.keys(this.challenges[year] || {}).map((day) =>
       parseInt(day, 10)
     );
-    const resultsSubject = new Subject<
-      RunnerResults[]
-    >();
-    const challengeResults: RunnerResults[] = [];
+    const resultsSubject = new Subject<RunnerResults>();
 
     (async () => {
-      for (const day of days) {
-        const result = await this.runChallenge(year, day);
-        challengeResults.push({ day, ...result });
-        resultsSubject.next([...challengeResults]);
-      }
+      const challengePromises = days.map(async (day) => {
+        try {
+          const result = await this.runChallenge(year, day);
+          const dayResult = { day, ...result };
+          resultsSubject.next(dayResult);
+        } catch (error) {
+          console.error(`Error running challenge for Day ${day}:`, error);
+        }
+      });
+
+      challengePromises.forEach((promise) => promise);
+
+      await Promise.all(challengePromises);
       resultsSubject.complete();
     })();
+
     return resultsSubject;
   }
 
   async runChallenge(
     year: number,
     day: number
-  ): Promise<{ part1: string; part2: string }> {
+  ): Promise<{
+    part1: string;
+    part2: string;
+    timePart1: number;
+    timePart2: number;
+  }> {
     const challenge = this.challenges[year]?.[day];
     if (!challenge) {
       return {
         part1: `No challenge implemented for Day ${day} of ${year}`,
         part2: `No challenge implemented for Day ${day} of ${year}`,
+        timePart1: 0,
+        timePart2: 0,
       };
     }
-    
-    return await this.runChallengeWithWorker(year, day);
-  }
 
-  async runChallengeWithWorker(
-    year: number,
-    day: number
-  ): Promise<{ part1: string; part2: string }> {
     return new Promise((resolve, reject) => {
-      const worker = new Worker(new URL('../runner.worker.ts', import.meta.url));
-  
+      const worker = new Worker(
+        new URL('../runner.worker.ts', import.meta.url)
+      );
+
       worker.onmessage = ({ data }) => {
         resolve(data);
         worker.terminate();
@@ -91,9 +108,15 @@ export class RunnerService {
         reject(err.message);
         worker.terminate();
       };
-      this.inputService.loadInput(year, day).subscribe((input) => {
-        worker.postMessage({ year, day, input });
+      this.inputService.loadInput(year, day).subscribe({
+        next: (input) => {
+          worker.postMessage({ year, day, input });
+        },
+        error: (err) => {
+          reject(`Input loading failed: ${err}`);
+          worker.terminate();
+        },
       });
     });
-  }  
+  }
 }

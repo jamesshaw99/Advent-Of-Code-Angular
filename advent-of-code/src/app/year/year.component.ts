@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
@@ -13,15 +13,21 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
 export class YearComponent implements OnInit {
   year = 0;
   noDays = 0;
-  dailyResults: { day: number; part1: string; part2: string; title: string }[] =
-    [];
+  completionPercentage = 0;
+  dailyResults: {
+    day: number;
+    part1: string;
+    part2: string;
+    timePart1: number;
+    timePart2: number;
+    title: string;
+  }[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private runnerService: RunnerService,
-    private challengeInfoService: ChallengeInfoService,
-    private cdr: ChangeDetectorRef
+    private challengeInfoService: ChallengeInfoService
   ) {}
 
   ngOnInit(): void {
@@ -29,30 +35,31 @@ export class YearComponent implements OnInit {
       this.year = +params['year'];
 
       this.noDays = this.challengeInfoService.getNumberOfDaysForYear(this.year);
-  
+
       this.runnerService.runAllChallenges(this.year).then((subject) => {
-        this.cdr.detach();
         subject.subscribe({
           next: (data) => {
-            const days = data.length;
             this.challengeInfoService
-              .getChallengeTitles(this.year, days)
-              .subscribe((titles) => {
-                this.dailyResults = data.map((result) => {
-                  const matchingTitle =
-                    titles.find((title) => title.day === result.day)?.title ||
-                    'Unknown Title';
-  
-                  return {
-                    ...result,
-                    title: matchingTitle,
-                  };
-                });
-                this.cdr.detectChanges();
+              .getChallengeTitle(this.year, data.day)
+              .subscribe((title) => {
+                const resultWithTitle = {
+                  ...data,
+                  title: title || 'Unknown Title',
+                };
+                const insertIndex = this.dailyResults.findIndex(result => result.day > data.day);
+                if (insertIndex === -1) {
+                  this.dailyResults.push(resultWithTitle);
+                } else {
+                  this.dailyResults.splice(insertIndex, 0, resultWithTitle);
+                }
+                this.completionPercentage = (this.dailyResults.length / this.noDays) * 100;
               });
           },
           complete: () => {
-            this.cdr.reattach();
+            console.log('subscription complete');
+          },
+          error: (err) => {
+            console.error('Subscription error:', err); // Log errors
           },
         });
       });

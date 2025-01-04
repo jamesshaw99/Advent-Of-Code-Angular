@@ -10,8 +10,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngFor="let year of years">
-          <a class="nav-link" href="/year/{{year}}">{{year}}</a>
+        <li class="nav-item" *ngFor="let info of yearInfo">
+          <a class="nav-link" href="/year/{{info.year}}">{{info.year}} [<span>{{info.days * 2}}<mat-icon>star</mat-icon></span>]</a>
         </li>
       </ul>
     </div>

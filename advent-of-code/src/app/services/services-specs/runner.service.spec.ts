@@ -7,7 +7,7 @@ import { RunnerService } from '../runner.service';
 import { InputService } from '../input.service';
 import { challengeInstances } from '../../helpers/challenge-definitions';
 import { provideHttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { RunnerResults } from '../../models/RunnerResults';
 import { day } from '../../helpers/day';
 
@@ -18,7 +18,7 @@ describe('RunnerService', () => {
 
   const mockChallengeInstances = [
     {
-      year: 2023,
+      year: 2024,
       day: 1,
       instance: new day(
         jasmine
@@ -27,7 +27,7 @@ describe('RunnerService', () => {
       ),
     },
     {
-      year: 2023,
+      year: 2024,
       day: 2,
       instance: new day(
         jasmine
@@ -36,7 +36,7 @@ describe('RunnerService', () => {
       ),
     },
     {
-      year: 2023,
+      year: 2024,
       day: 3,
       instance: new day(
         jasmine
@@ -75,8 +75,8 @@ describe('RunnerService', () => {
       service.initializeChallenges(mockChallengeInstances);
 
       // Assert
-      expect(service['challenges'][2023][1]).toBeDefined();
-      expect(service['challenges'][2023][2]).toBeDefined();
+      expect(service['challenges'][2024][1]).toBeDefined();
+      expect(service['challenges'][2024][2]).toBeDefined();
     });
   });
 
@@ -96,15 +96,15 @@ describe('RunnerService', () => {
   describe('runAllChallenges', () => {
     it('should run all challenges for a given year', fakeAsync(() => {
       // Arrange
-      const year = 2023;
+      const year = 2024;
       const mockResults = [
-        { day: 1, part1: 'result1', part2: 'result2' },
-        { day: 2, part1: 'result1', part2: 'result2' },
-        { day: 3, part1: 'result1', part2: 'result2' },
+        { day: 1, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 },
+        { day: 2, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 },
+        { day: 3, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 },
       ];
 
       spyOn(service, 'runChallenge').and.callFake(
-        (year: number, day: number) => {
+        (_year: number, day: number) => {
           return new Promise((resolve) => {
             setTimeout(() => {
               resolve(mockResults.find((result) => result.day === day)!);
@@ -114,7 +114,7 @@ describe('RunnerService', () => {
       );
 
       // Act
-      const emittedResults: RunnerResults[][] = [];
+      const emittedResults: RunnerResults[] = [];
       const subjectPromise = service.runAllChallenges(year);
 
       subjectPromise.then((subject) => {
@@ -127,46 +127,30 @@ describe('RunnerService', () => {
 
       // Assert
       expect(emittedResults.length).toBe(3);
-      expect(emittedResults[0]).toEqual([
-        { day: 1, part1: 'result1', part2: 'result2' },
-      ]);
-      expect(emittedResults[1]).toEqual([
-        { day: 1, part1: 'result1', part2: 'result2' },
-        { day: 2, part1: 'result1', part2: 'result2' },
-      ]);
-      expect(emittedResults[2]).toEqual(mockResults);
+      expect(emittedResults[0]).toEqual({ day: 1, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 });
+      expect(emittedResults[1]).toEqual({ day: 2, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 });
+      expect(emittedResults[2]).toEqual({ day: 3, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 });
     }));
   });
 
   describe('runChallenge', () => {
-    it('should return challenge result for a specific day and year', async () => {
-      // Arrange
-      const year = 2023;
-      const day = 1;
-      const mockResult = { part1: 'result1', part2: 'result2', input: [] };
+    let workerSpy: jasmine.Spy;
+    let mockWorker: Worker;
 
-      service.challenges = {
-        2023: {
-          1: {
-            run: () => mockResult,
-          }
-        }
-      };
-
-      spyOn(service, 'runChallengeWithWorker').and.returnValue(
-        Promise.resolve(mockResult)
-      );
-
-      // Act
-      const result = await service.runChallenge(year, day);
-
-      // Assert
-      expect(result).toEqual(mockResult);
+    beforeEach(() => {
+      mockWorker = {
+        postMessage: jasmine.createSpy('postMessage'),
+        terminate: jasmine.createSpy('terminate'),
+        onmessage: null,
+        onerror: null,
+      } as unknown as Worker;
+  
+      workerSpy = spyOn(window, 'Worker').and.returnValue(mockWorker);
     });
 
     it('should return a default message if no challenge is implemented', async () => {
       // Arrange
-      const year = 2023;
+      const year = 2024;
       const day = 99;
 
       // Act
@@ -176,67 +160,65 @@ describe('RunnerService', () => {
       expect(result).toEqual({
         part1: `No challenge implemented for Day ${day} of ${year}`,
         part2: `No challenge implemented for Day ${day} of ${year}`,
+        timePart1: 0,
+        timePart2: 0,
       });
     });
-  });
 
-  describe('runChallengeWithWorker', () => {
-    it('should resolve challenge data when worker posts message', (done) => {
-      const mockInput = ['mock input data']; // Your mock input data
-      const mockWorkerResponse = { part1: 'Result 1', part2: 'Result 2' }; // Worker response
+    it('should resolve with worker result when input is loaded successfully', async () => {
+      //Arrange
+      inputService.loadInput.and.returnValue(of(['test input']));
+  
+      const mockWorkerResult = {
+        part1: 'result1',
+        part2: 'result2',
+        timePart1: 123,
+        timePart2: 456,
+      };
+  
+      setTimeout(() => {
+        if (mockWorker.onmessage) {
+          mockWorker.onmessage({ data: mockWorkerResult } as MessageEvent);
+        }
+      }, 10);
+  
+      //Act
+      const result = await service.runChallenge(2024, 1);
 
-      // Mock the observable from the input service
-      inputService.loadInput.and.returnValue(of(mockInput));
-
-      // Create a spy for the Web Worker and mock its behavior
-      const workerSpy = jasmine.createSpyObj('Worker', [
-        'postMessage',
-        'terminate',
-      ]);
-      workerSpy.onmessage = null;
-      workerSpy.onerror = null;
-
-      // Mock the global Worker constructor
-      spyOn(window, 'Worker').and.returnValue(workerSpy as Worker);
-
-      // Act
-      service.runChallengeWithWorker(2024, 1).then((result) => {
-        // Assert
-        expect(result).toEqual(mockWorkerResponse);
-        done();
+      //Assert
+      expect(workerSpy).toHaveBeenCalled();
+      expect(mockWorker.postMessage).toHaveBeenCalledWith({
+        year: 2024,
+        day: 1,
+        input: ['test input'],
       });
-
-      // Simulate the worker posting a message
-      workerSpy.onmessage({ data: mockWorkerResponse });
+      expect(result).toEqual(mockWorkerResult);
+      expect(mockWorker.terminate).toHaveBeenCalled();
     });
+  
+    it('should reject with an error message if the worker fails', async () => {
+      //Arrange
+      inputService.loadInput.and.returnValue(of(['test input']));
+  
+      setTimeout(() => {
+        if (mockWorker.onerror) {
+          mockWorker.onerror({ message: 'Worker error occurred' } as ErrorEvent);
+        }
+      }, 10);
 
-    it('should reject when worker encounters an error', (done) => {
-      const mockErrorMessage = 'Worker failed';
-      const mockInput = ['mock input data']; // Your mock input data
-
-      // Mock the observable from the input service
-      inputService.loadInput.and.returnValue(of(mockInput));
-
-      // Create a spy for the Web Worker and mock its behavior
-      const workerSpy = jasmine.createSpyObj('Worker', [
-        'postMessage',
-        'terminate',
-      ]);
-      workerSpy.onmessage = null;
-      workerSpy.onerror = null;
-
-      // Mock the global Worker constructor
-      spyOn(window, 'Worker').and.returnValue(workerSpy as Worker);
-
-      // Act
-      service.runChallengeWithWorker(2024, 1).catch((error) => {
-        // Assert
-        expect(error).toBe(mockErrorMessage);
-        done();
-      });
-
-      // Simulate the worker encountering an error
-      workerSpy.onerror({ message: mockErrorMessage });
+      //Act & Assert
+      await expectAsync(service.runChallenge(2024, 1)).toBeRejectedWith('Worker error occurred');
+      expect(mockWorker.terminate).toHaveBeenCalled();
+    });
+  
+    it('should reject if inputService.loadInput fails', async () => {
+      //Arrange
+      inputService.loadInput.and.returnValue(throwError(() => 'Input loading error'));
+  
+      //Act & Assert
+      await expectAsync(service.runChallenge(2024, 1)).toBeRejectedWith('Input loading failed: Input loading error');
+      expect(mockWorker.postMessage).not.toHaveBeenCalled();
+      expect(mockWorker.terminate).toHaveBeenCalled();
     });
   });
 });

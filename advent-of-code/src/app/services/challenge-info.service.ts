@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, forkJoin, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { ChallengeInfo } from '../models/ChallengeInfo';
 import { challengeInstances } from '../helpers/challenge-definitions';
 
@@ -37,36 +37,28 @@ export class ChallengeInfoService {
       );
   }
 
-  getChallengeTitles(
+  getChallengeTitle(
     year: number,
-    days: number
-  ): Observable<{ day: number; title: string }[]> {
-    const requests = Array.from({ length: days }, (_, day) => {
-      const cachedData = this.challengeInfo[year]?.[day + 1];
+    day: number
+  ): Observable<string> {
+      const cachedData = this.challengeInfo[year]?.[day];
       if (cachedData) {
-        return of(cachedData);
+        return of(cachedData.title);
       }
 
       return this.http
-        .get<ChallengeInfo>(`http://localhost:3000/scrape/${year}/${day + 1}`)
+        .get<ChallengeInfo>(`http://localhost:3000/scrape/${year}/${day}`)
         .pipe(
           tap((data) => {
             if (!this.challengeInfo[year]) {
               this.challengeInfo[year] = {};
             }
-            this.challengeInfo[year][day + 1] = data;
+            this.challengeInfo[year][day] = data;
           }),
-          catchError(() => of({ title: 'No title available' }))
+          map((data) => {
+            return data.title || 'No title available';
+          }),
+          catchError(() => of('No title available'))
         );
-    });
-
-    return forkJoin(requests).pipe(
-      map((responses) => {
-        return responses.map((data, index) => ({
-          day: index + 1,
-          title: data.title || 'No title available', // Ensure a fallback title
-        }));
-      })
-    );
   }
 }
