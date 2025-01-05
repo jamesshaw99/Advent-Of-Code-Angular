@@ -12,7 +12,11 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     mockRunnerService = jasmine.createSpyObj('RunnerService', ['getYears']);
 
-    mockRunnerService.getYears.and.returnValue([{year: 2020, days:0}, {year: 2021, days:2}, {year:2022, days: 5}]);
+    mockRunnerService.getYears.and.returnValue([
+      { year: 2020, days: 0, stars: 0 },
+      { year: 2021, days: 2, stars: 4 },
+      { year: 2022, days: 5, stars: 9 },
+    ]);
 
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
@@ -34,7 +38,11 @@ describe('HomeComponent', () => {
       component.ngOnInit();
 
       // Assert that yearInfo array is populated
-      expect(component.yearInfo).toEqual([{year: 2020, days:0}, {year: 2021, days:2}, {year:2022, days: 5}]);
+      expect(component.yearInfo).toEqual([
+        { year: 2020, days: 0, stars: 0 },
+        { year: 2021, days: 2, stars: 4 },
+        { year: 2022, days: 5, stars: 9 },
+      ]);
     });
 
     it('should render years in the HTML', () => {
@@ -48,7 +56,7 @@ describe('HomeComponent', () => {
       expect(cardTitles.length).toBe(3);
       expect(cardTitles[0].nativeElement.textContent).toBe('2020 [0star]');
       expect(cardTitles[1].nativeElement.textContent).toBe('2021 [4star]');
-      expect(cardTitles[2].nativeElement.textContent).toBe('2022 [10star]');
+      expect(cardTitles[2].nativeElement.textContent).toBe('2022 [9star]');
     });
   });
 

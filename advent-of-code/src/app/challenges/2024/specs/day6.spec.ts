@@ -1,6 +1,6 @@
-import { year2024day6 } from '../challenges/year2024day6';
+import { year2024day6 } from '../day6';
 
-describe('year2024day6', () => {
+describe('2024 day6', () => {
   const input = [
     '....#.....',
     '.........#',

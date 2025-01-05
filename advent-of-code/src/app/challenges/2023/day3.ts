@@ -1,6 +1,6 @@
-import { day } from '../helpers/day';
-import { PartNo } from '../helpers/partNo';
-import { Symbol } from '../helpers/symbol';
+import { day } from '../../helpers/day';
+import { PartNo } from '../../helpers/partNo';
+import { Symbol } from '../../helpers/symbol';
 
 export class year2023day3 extends day {
   private partNos: PartNo[] = [];

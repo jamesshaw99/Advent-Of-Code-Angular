@@ -1,6 +1,6 @@
-import { year2024day7 } from '../challenges/year2024day7';
+import { year2024day7 } from '../day7';
 
-describe('year2024day7', () => {
+describe('2024 day7', () => {
   let dayInstance: year2024day7;
 
   beforeEach(() => {

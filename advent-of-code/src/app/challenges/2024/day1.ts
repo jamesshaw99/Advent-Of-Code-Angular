@@ -1,4 +1,4 @@
-import { day } from '../helpers/day';
+import { day } from '../../helpers/day';
 
 export class year2024day1 extends day {
   leftList: number[] = [];

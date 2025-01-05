@@ -1,4 +1,4 @@
-import { day } from '../helpers/day';
+import { day } from '../../helpers/day';
 
 export class year2024day9 extends day {
   private diskMap!: string;

@@ -1,6 +1,6 @@
-import { year2024day2 } from '../challenges/year2024day2';
+import { year2024day2 } from '../day2';
 
-describe('year2024day2 Class', () => {
+describe('2024 day2', () => {
   let instance: year2024day2;
 
   const input: string[] = [

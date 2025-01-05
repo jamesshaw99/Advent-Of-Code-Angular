@@ -1,4 +1,4 @@
-import { day } from '../helpers/day';
+import { day } from '../../helpers/day';
 
 export class year2024day5 extends day {
     private orderRules = new Map<number, Set<number>>();

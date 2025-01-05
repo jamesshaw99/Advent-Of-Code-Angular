@@ -1,4 +1,4 @@
-import { day } from '../helpers/day';
+import { day } from '../../helpers/day';
 
 export class year2024day2 extends day {
   override part1(): string {

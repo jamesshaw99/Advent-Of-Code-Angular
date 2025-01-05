@@ -1,5 +1,5 @@
-import { day } from '../helpers/day';
-import { Game } from '../helpers/game';
+import { day } from '../../helpers/day';
+import { Game } from '../../helpers/game';
 
 export class year2023day2 extends day {
   private games: Game[] = [];

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 class MockRunnerService {
   getYears() {
-    return [{year: 2023, days: 5}, {year: 2024, days: 10}];
+    return [{year: 2023, days: 5, stars: 10}, {year: 2024, days: 10, stars: 20}];
   }
 }
 

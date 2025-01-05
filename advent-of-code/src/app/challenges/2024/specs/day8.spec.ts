@@ -1,7 +1,7 @@
-import { year2024day8 } from '../challenges/year2024day8';
-import { Point } from '../models/point';
+import { year2024day8 } from '../day8';
+import { Point } from '../../../models/point';
 
-describe('year2024day8', () => {
+describe('2024 day8', () => {
   let dayInstance: year2024day8;
 
   beforeEach(() => {

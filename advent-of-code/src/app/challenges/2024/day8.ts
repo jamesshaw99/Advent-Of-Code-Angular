@@ -1,5 +1,5 @@
-import { day } from '../helpers/day';
-import { Point } from '../models/point';
+import { day } from '../../helpers/day';
+import { Point } from '../../models/point';
 
 export class year2024day8 extends day {
 antennas: Record<string, Point[]> = {};
