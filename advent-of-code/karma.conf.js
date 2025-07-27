@@ -26,9 +26,12 @@ module.exports = function (config) {
       singleRun: false,
       restartOnFileChange: true,
       browserDisconnectTimeout: 210000,
-      files: [
-        { pattern: 'src/**/*.spec.ts', type: 'js' }
-      ]
+      karmaTypescriptConfig: {
+      compilerOptions: {
+        target: "es2022",
+        lib: ["es2022", "dom"]
+      }
+    }
     });
   };
   

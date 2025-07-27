@@ -25,7 +25,10 @@ export class RunnerService {
     >
   > = {};
 
-  constructor(private inputService: InputService, private challengeInfoService: ChallengeInfoService) {
+  constructor(
+    private inputService: InputService,
+    private challengeInfoService: ChallengeInfoService
+  ) {
     this.initializeChallenges(challengeInstances);
   }
 
@@ -42,20 +45,20 @@ export class RunnerService {
     }
   }
 
-  getYears(): {year: number, days: number, stars: number}[] {
+  getYears(): { year: number; days: number; stars: number }[] {
     return Object.keys(this.challenges).map((year) => {
-      const yearInt = parseInt(year, 10);      
+      const yearInt = parseInt(year, 10);
       const days = Object.keys(this.challenges[yearInt]).length;
       // Count the number of stars earned for the year by checking the number of overrides
       const stars = challengeInstances
-        .filter(ci => ci.year === yearInt)
+        .filter((ci) => ci.year === yearInt)
         .reduce((count, ci) => {
           let overrides = 0;
           if (ci.instance.part1 !== day.prototype.part1) overrides++;
           if (ci.instance.part2 !== day.prototype.part2) overrides++;
           return count + overrides;
         }, 0);
-      return {year: yearInt, days, stars};
+      return { year: yearInt, days, stars };
     });
   }
 
@@ -110,11 +113,15 @@ export class RunnerService {
       );
 
       worker.onmessage = ({ data }) => {
-        resolve(data);
+        if (data.error) {
+          reject(data.stack);
+        } else {
+          resolve(data);
+        }
         worker.terminate();
       };
       worker.onerror = (err) => {
-        reject(err.message);
+        reject(err);
         worker.terminate();
       };
       this.inputService.loadInput(year, day).subscribe({

@@ -15,39 +15,59 @@ describe('RunnerService', () => {
   let service: RunnerService;
   let inputService: jasmine.SpyObj<InputService>;
   let httpMock: HttpTestingController;
-
-  const mockChallengeInstances = [
-    {
-      year: 2024,
-      day: 1,
-      instance: new day(
-        jasmine
-          .createSpy('run')
-          .and.returnValue({ part1: 'result1', part2: 'result1' })
-      ),
-    },
-    {
-      year: 2024,
-      day: 2,
-      instance: new day(
-        jasmine
-          .createSpy('run')
-          .and.returnValue({ part1: 'result2', part2: 'result2' })
-      ),
-    },
-    {
-      year: 2024,
-      day: 3,
-      instance: new day(
-        jasmine
-          .createSpy('run')
-          .and.returnValue({ part1: 'result3', part2: 'result3' })
-      ),
-    },
-  ];
+  let mockChallengeInstances: {
+    year: number,
+    day: number,
+    instance: day
+  }[];
 
   beforeEach(() => {
     inputService = jasmine.createSpyObj('InputService', ['loadInput']);
+
+    mockChallengeInstances = [
+      {
+        year: 2024,
+        day: 1,
+        instance: (() => {
+          const instance = new day();
+          spyOn(instance, 'run').and.returnValue({
+            part1: 'result1',
+            part2: 'result1',
+            timePart1: 0,
+            timePart2: 0,
+          });
+          return instance;
+        })(),
+      },
+      {
+        year: 2024,
+        day: 2,
+        instance: (() => {
+          const instance = new day();
+          spyOn(instance, 'run').and.returnValue({
+            part1: 'result2',
+            part2: 'result2',
+            timePart1: 0,
+            timePart2: 0,
+          });
+          return instance;
+        })(),
+      },
+      {
+        year: 2024,
+        day: 3,
+        instance: (() => {
+          const instance = new day();
+          spyOn(instance, 'run').and.returnValue({
+            part1: 'result3',
+            part2: 'result3',
+            timePart1: 0,
+            timePart2: 0,
+          });
+          return instance;
+        })(),
+      },
+    ];
 
     TestBed.configureTestingModule({
       providers: [
@@ -98,9 +118,27 @@ describe('RunnerService', () => {
       // Arrange
       const year = 2024;
       const mockResults = [
-        { day: 1, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 },
-        { day: 2, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 },
-        { day: 3, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 },
+        {
+          day: 1,
+          part1: 'result1',
+          part2: 'result2',
+          timePart1: 0,
+          timePart2: 0,
+        },
+        {
+          day: 2,
+          part1: 'result1',
+          part2: 'result2',
+          timePart1: 0,
+          timePart2: 0,
+        },
+        {
+          day: 3,
+          part1: 'result1',
+          part2: 'result2',
+          timePart1: 0,
+          timePart2: 0,
+        },
       ];
 
       spyOn(service, 'runChallenge').and.callFake(
@@ -127,9 +165,27 @@ describe('RunnerService', () => {
 
       // Assert
       expect(emittedResults.length).toBe(3);
-      expect(emittedResults[0]).toEqual({ day: 1, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 });
-      expect(emittedResults[1]).toEqual({ day: 2, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 });
-      expect(emittedResults[2]).toEqual({ day: 3, part1: 'result1', part2: 'result2', timePart1: 0, timePart2: 0 });
+      expect(emittedResults[0]).toEqual({
+        day: 1,
+        part1: 'result1',
+        part2: 'result2',
+        timePart1: 0,
+        timePart2: 0,
+      });
+      expect(emittedResults[1]).toEqual({
+        day: 2,
+        part1: 'result1',
+        part2: 'result2',
+        timePart1: 0,
+        timePart2: 0,
+      });
+      expect(emittedResults[2]).toEqual({
+        day: 3,
+        part1: 'result1',
+        part2: 'result2',
+        timePart1: 0,
+        timePart2: 0,
+      });
     }));
   });
 
@@ -144,7 +200,7 @@ describe('RunnerService', () => {
         onmessage: null,
         onerror: null,
       } as unknown as Worker;
-  
+
       workerSpy = spyOn(window, 'Worker').and.returnValue(mockWorker);
     });
 
@@ -168,20 +224,20 @@ describe('RunnerService', () => {
     it('should resolve with worker result when input is loaded successfully', async () => {
       //Arrange
       inputService.loadInput.and.returnValue(of(['test input']));
-  
+
       const mockWorkerResult = {
         part1: 'result1',
         part2: 'result2',
         timePart1: 123,
         timePart2: 456,
       };
-  
+
       setTimeout(() => {
         if (mockWorker.onmessage) {
           mockWorker.onmessage({ data: mockWorkerResult } as MessageEvent);
         }
       }, 10);
-  
+
       //Act
       const result = await service.runChallenge(2024, 1);
 
@@ -195,28 +251,36 @@ describe('RunnerService', () => {
       expect(result).toEqual(mockWorkerResult);
       expect(mockWorker.terminate).toHaveBeenCalled();
     });
-  
+
     it('should reject with an error message if the worker fails', async () => {
       //Arrange
       inputService.loadInput.and.returnValue(of(['test input']));
-  
+
       setTimeout(() => {
         if (mockWorker.onerror) {
-          mockWorker.onerror({ message: 'Worker error occurred' } as ErrorEvent);
+          mockWorker.onerror({
+            message: 'Worker error occurred',
+          } as ErrorEvent);
         }
       }, 10);
 
       //Act & Assert
-      await expectAsync(service.runChallenge(2024, 1)).toBeRejectedWith('Worker error occurred');
+      await expectAsync(service.runChallenge(2024, 1)).toBeRejectedWith(
+        { message: 'Worker error occurred' }
+      );
       expect(mockWorker.terminate).toHaveBeenCalled();
     });
-  
+
     it('should reject if inputService.loadInput fails', async () => {
       //Arrange
-      inputService.loadInput.and.returnValue(throwError(() => 'Input loading error'));
-  
+      inputService.loadInput.and.returnValue(
+        throwError(() => 'Input loading error')
+      );
+
       //Act & Assert
-      await expectAsync(service.runChallenge(2024, 1)).toBeRejectedWith('Input loading failed: Input loading error');
+      await expectAsync(service.runChallenge(2024, 1)).toBeRejectedWith(
+        'Input loading failed: Input loading error'
+      );
       expect(mockWorker.postMessage).not.toHaveBeenCalled();
       expect(mockWorker.terminate).toHaveBeenCalled();
     });

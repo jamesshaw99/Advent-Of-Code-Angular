@@ -42,9 +42,6 @@ export class DayComponent implements OnInit{
         .runChallenge(this.year, this.day)
         .then((data) => {
           this.result = data;
-        })
-        .catch((error) => {
-          console.error(`Error running challenge: ${error.message}`);
         });
     });
   }

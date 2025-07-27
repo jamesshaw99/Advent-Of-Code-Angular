@@ -1,13 +1,7 @@
 export class day {
   input: string[] = [];
-  run: (input: string[]) => { part1: string; part2: string; timePart1: number; timePart2: number };
 
-  // Constructor that allows injecting a mock or custom run function
-  constructor(run?: (input: string[]) => { part1: string; part2: string; timePart1: number; timePart2: number }) {
-    this.run = run || this.defaultRun;
-  }
-
-  private defaultRun(input: string[]): { part1: string; part2: string; timePart1: number; timePart2: number } {
+  run(input: string[]): { part1: string; part2: string; timePart1: number; timePart2: number } {
     this.input = input;
     this.preChallenge();
 

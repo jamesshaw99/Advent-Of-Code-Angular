@@ -15,8 +15,10 @@
           <div class="card-body text-center">
             <h5 class="card-title">{{day.title}}</h5>
             <p class="card-text">Challenge summary for Day {{day.day}}</p>
-            <p class="card-text">Part 1: {{day.part1}} ({{day.timePart1}}ms)</p>
-            <p class="card-text">Part 2: {{day.part2}} ({{day.timePart2}}ms)</p>
+            <p class="card-text">Part 1 ({{day.timePart1}}ms)</p>
+            <p class="challenge-result" [innerHTML]="day.part1"></p>
+            <p class="card-text">Part 2 ({{day.timePart2}}ms)</p>
+            <p class="challenge-result" [innerHTML]="day.part2"></p>
             <a href="/{{year}}/day/{{day.day}}" class="btn btn-primary">View Challenge</a>
           </div>
         </div>

@@ -37,10 +37,22 @@ h1, h2, h3, h4, h5 {
 
 .card {
   border-radius: 10px;
+  min-width: min-content;
 }
 
 .card-title {
   font-weight: bold;
+}
+
+.card-text {
+    font-weight: bold;
+}
+
+.challenge-result {
+    text-align: left;
+    font-family: monospace;
+    white-space: pre-wrap;
+    line-height: 1;
 }
 
 .navbar {
@@ -62,7 +74,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
 }
 
 pre {
