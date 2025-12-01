@@ -22,6 +22,7 @@ describe('ChallengeInfoService', () => {
       ],
     });
 
+    spyOn(console, 'error'); //supress during tests
     service = TestBed.inject(ChallengeInfoService);
     httpMock = TestBed.inject(HttpTestingController);
   });

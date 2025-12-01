@@ -46,23 +46,7 @@ describe('DayComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should fetch challenge info on init', () => {
-      const challengeInfo = {
-        title: 'Test Challenge',
-        part1Description: ['Part 1 Description'],
-        part2Description: ['Part 2 Description'],
-      };
-      mockChallengeInfoService.getChallengeInfo.and.returnValue(of(challengeInfo));
-
-      // Act
-      component.ngOnInit();
-
-      // Assert
-      expect(component.challengeInfo).toEqual(challengeInfo);
-      expect(mockChallengeInfoService.getChallengeInfo).toHaveBeenCalledWith(2023, 5);
-    });
-
-    it('should run challenge on init', async () => {
+    it('should fetch challenge info and run challenge on init', async () => {
       // Arrange
       const challengeInfo = {
         title: 'Test Challenge',
@@ -78,6 +62,8 @@ describe('DayComponent', () => {
       await component.ngOnInit();
     
       // Assert
+      expect(component.challengeInfo).toEqual(challengeInfo);
+      expect(mockChallengeInfoService.getChallengeInfo).toHaveBeenCalledWith(2023, 5);
       expect(component.result).toEqual(result);
       expect(mockRunnerService.runChallenge).toHaveBeenCalledWith(2023, 5);
     });

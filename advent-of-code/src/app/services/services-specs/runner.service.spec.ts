@@ -30,12 +30,12 @@ describe('RunnerService', () => {
         day: 1,
         instance: (() => {
           const instance = new day();
-          spyOn(instance, 'run').and.returnValue({
+          spyOn(instance, 'run').and.returnValue(Promise.resolve({
             part1: 'result1',
             part2: 'result1',
             timePart1: 0,
             timePart2: 0,
-          });
+          }));
           return instance;
         })(),
       },
@@ -44,12 +44,12 @@ describe('RunnerService', () => {
         day: 2,
         instance: (() => {
           const instance = new day();
-          spyOn(instance, 'run').and.returnValue({
+          spyOn(instance, 'run').and.returnValue(Promise.resolve({
             part1: 'result2',
             part2: 'result2',
             timePart1: 0,
             timePart2: 0,
-          });
+          }));
           return instance;
         })(),
       },
@@ -58,12 +58,12 @@ describe('RunnerService', () => {
         day: 3,
         instance: (() => {
           const instance = new day();
-          spyOn(instance, 'run').and.returnValue({
+          spyOn(instance, 'run').and.returnValue(Promise.resolve({
             part1: 'result3',
             part2: 'result3',
             timePart1: 0,
             timePart2: 0,
-          });
+          }));
           return instance;
         })(),
       },

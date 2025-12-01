@@ -1,3 +1,10 @@
+import { year2019day1 } from '../challenges/2019/day1';
+import { year2019day2 } from '../challenges/2019/day2';
+import { year2019day3 } from '../challenges/2019/day3';
+import { year2019day4 } from '../challenges/2019/day4';
+import { year2019day5 } from '../challenges/2019/day5';
+import { year2019day6 } from '../challenges/2019/day6';
+import { year2019day7 } from '../challenges/2019/day7';
 import { year2020day1 } from '../challenges/2020/day1';
 import { year2020day2 } from '../challenges/2020/day2';
 import { year2020day3 } from '../challenges/2020/day3';
@@ -17,6 +24,12 @@ import { year2020day16 } from '../challenges/2020/day16';
 import { year2020day17 } from '../challenges/2020/day17';
 import { year2020day18 } from '../challenges/2020/day18';
 import { year2020day19 } from '../challenges/2020/day19';
+import { year2020day20 } from '../challenges/2020/day20';
+import { year2020day21 } from '../challenges/2020/day21';
+import { year2020day22 } from '../challenges/2020/day22';
+import { year2020day23 } from '../challenges/2020/day23';
+import { year2020day24 } from '../challenges/2020/day24';
+import { year2020day25 } from '../challenges/2020/day25';
 import { year2021day1 } from '../challenges/2021/day1';
 import { year2021day2 } from '../challenges/2021/day2';
 import { year2021day3 } from '../challenges/2021/day3';
@@ -62,8 +75,22 @@ import { year2024day9 } from '../challenges/2024/day9';
 import { year2024day10 } from '../challenges/2024/day10';
 import { year2024day11 } from '../challenges/2024/day11';
 import { year2024day12 } from '../challenges/2024/day12';
+import { day } from './day';
 
-export const challengeInstances = [
+interface ChallengeInstance {
+  year: number;
+  day: number;
+  instance: InstanceType<typeof day>;
+}
+
+export const challengeInstances: ChallengeInstance[] = [
+{ year: 2019, day: 1, instance: new year2019day1() },
+{ year: 2019, day: 2, instance: new year2019day2() },
+{ year: 2019, day: 3, instance: new year2019day3() },
+{ year: 2019, day: 4, instance: new year2019day4() },
+{ year: 2019, day: 5, instance: new year2019day5() },
+{ year: 2019, day: 6, instance: new year2019day6() },
+{ year: 2019, day: 7, instance: new year2019day7() },
 { year: 2020, day: 1, instance: new year2020day1() },
 { year: 2020, day: 2, instance: new year2020day2() },
 { year: 2020, day: 3, instance: new year2020day3() },
@@ -83,6 +110,12 @@ export const challengeInstances = [
 { year: 2020, day: 17, instance: new year2020day17() },
 { year: 2020, day: 18, instance: new year2020day18() },
 { year: 2020, day: 19, instance: new year2020day19() },
+{ year: 2020, day: 20, instance: new year2020day20() },
+{ year: 2020, day: 21, instance: new year2020day21() },
+{ year: 2020, day: 22, instance: new year2020day22() },
+{ year: 2020, day: 23, instance: new year2020day23() },
+{ year: 2020, day: 24, instance: new year2020day24() },
+{ year: 2020, day: 25, instance: new year2020day25() },
 { year: 2021, day: 1, instance: new year2021day1() },
 { year: 2021, day: 2, instance: new year2021day2() },
 { year: 2021, day: 3, instance: new year2021day3() },

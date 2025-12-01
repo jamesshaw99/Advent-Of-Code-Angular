@@ -1,16 +1,17 @@
+
 export class day {
   input: string[] = [];
 
-  run(input: string[]): { part1: string; part2: string; timePart1: number; timePart2: number } {
+  async run(input: string[]): Promise<{ part1: string; part2: string; timePart1: number; timePart2: number }> {
     this.input = input;
     this.preChallenge();
 
     const startPart1 = performance.now();
-    const part1Result = this.part1();
+    const part1Result = await this.part1();
     const endPart1 = performance.now();
 
     const startPart2 = performance.now();
-    const part2Result = this.part2();
+    const part2Result = await this.part2();
     const endPart2 = performance.now();
 
     return {
@@ -23,11 +24,11 @@ export class day {
 
   preChallenge() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
-  part1() {
+  part1(): string | Promise<string> {
     return 'not implemented';
   }
 
-  part2() {
+  part2(): string | Promise<string> {
     return 'not implemented';
   }
 }

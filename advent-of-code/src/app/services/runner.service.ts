@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { challengeInstances } from '../helpers/challenge-definitions';
 import { day } from '../helpers/day';
 import { RunnerResults } from '../models/RunnerResults';
-import { ChallengeInfoService } from './challenge-info.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,19 +14,18 @@ export class RunnerService {
     Record<
       number,
       {
-        run: (input: string[]) => {
+        run: (input: string[]) => Promise<{
           part1: string;
           part2: string;
           timePart1: number;
           timePart2: number;
-        };
+        }>;
       }
     >
   > = {};
 
   constructor(
-    private inputService: InputService,
-    private challengeInfoService: ChallengeInfoService
+    private inputService: InputService
   ) {
     this.initializeChallenges(challengeInstances);
   }
@@ -40,7 +38,7 @@ export class RunnerService {
         this.challenges[year] = {};
       }
       this.challenges[year][day] = {
-        run: instance.run.bind(instance),
+        run: (input: string[]) => instance.run(input),
       };
     }
   }

@@ -12,7 +12,7 @@ describe('day Class', () => {
   });
 
   describe('run', () => {
-    it('should update input and call methods', () => {
+    it('should update input and call methods', async () => {
       // Arrange
       const input = ['test input'];
 
@@ -30,7 +30,7 @@ describe('day Class', () => {
       globalThis.performance = { now: mockPerformanceNow } as unknown as Performance;
 
       // Act
-      const result = instance.run(input);
+      const result = await instance.run(input);
 
       // Assert
       expect(instance.input).toBe(input);
