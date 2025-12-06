@@ -17,19 +17,6 @@ export class year2025day3 extends day {
     return `Total joltage of the banks: ${total}`;
   }
 
-//   findMaxJoltage(bank: string): number {
-//     let maxJoltage = 0;
-
-//     for (let i = 0; i < bank.length - 1; i++) {
-//       for (let j = i + 1; j < bank.length; j++) {
-//         const joltage = parseInt(bank[i] + bank[j]);
-//         maxJoltage = Math.max(maxJoltage, joltage);
-//       }
-//     }
-
-//     return maxJoltage;
-//   }
-
   findMaxJoltage(bank: string, digitsNeeded: number): number {
 
     if (bank.length < digitsNeeded) {

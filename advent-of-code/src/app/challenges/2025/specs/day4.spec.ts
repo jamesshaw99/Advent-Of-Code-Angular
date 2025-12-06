@@ -1,6 +1,6 @@
 import { year2025day4 } from '../day4';
 
-fdescribe('2025 day 4', () => {
+describe('2025 day 4', () => {
   let instance: year2025day4;
   const input: string[] = [
     '..@@.@@@@.',
