@@ -1,6 +1,6 @@
 import { year2025day8 } from '../day8';
 
-fdescribe('2025 day 8', () => {
+describe('2025 day 8', () => {
   let instance: year2025day8;
   const input: string[] = [
     '162,817,812',
