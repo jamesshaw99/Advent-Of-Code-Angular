@@ -84,6 +84,8 @@ import { year2025day6 } from '../challenges/2025/day6';
 import { year2025day7 } from '../challenges/2025/day7';
 import { year2025day8 } from '../challenges/2025/day8';
 import { year2025day9 } from '../challenges/2025/day9';
+import { year2025day10 } from '../challenges/2025/day10';
+import { year2025day11 } from '../challenges/2025/day11';
 import { day } from './day';
 
 interface ChallengeInstance {
@@ -178,5 +180,7 @@ export const challengeInstances: ChallengeInstance[] = [
 { year: 2025, day: 6, instance: new year2025day6() },
 { year: 2025, day: 7, instance: new year2025day7() },
 { year: 2025, day: 8, instance: new year2025day8() },
-{ year: 2025, day: 9, instance: new year2025day9() }
+{ year: 2025, day: 9, instance: new year2025day9() },
+{ year: 2025, day: 10, instance: new year2025day10() },
+{ year: 2025, day: 11, instance: new year2025day11() }
 ];

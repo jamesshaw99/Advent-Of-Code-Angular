@@ -30,9 +30,6 @@ export class year2019day6 extends day {
     if (!you || !san) throw new Error('Missing YOU or SAN node');
 
     const common = this.findCommonParent(you, san);
-    console.log(you.getDepth())
-    console.log(common.getDepth())
-    console.log(san.getDepth())
     const result =
       (you.getDepth() - common.getDepth()) +
       (san.getDepth() - common.getDepth()) -
@@ -52,7 +49,6 @@ export class year2019day6 extends day {
     const node2Parents = node2.getAncestors();
 
     const common = node1Parents.filter((p) => node2Parents.includes(p));
-    console.log(common);
     common.sort((a, b) => b.getDepth() - a.getDepth());
     return common[0];
   }

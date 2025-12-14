@@ -36,7 +36,6 @@ export class Amplifier {
       const instruction = this.programMem[this.programCount++];
       const operationCode = instruction % 100;
       const parameterModes = this.extractParameterModes(instruction);
-       console.log(instruction, operationCode)
       if (operationCode === 99) {
         return ExitReason.EXITED;
       }

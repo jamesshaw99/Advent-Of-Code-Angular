@@ -37,7 +37,7 @@ describe('2025 day 6', () => {
           operation: '+',
         },
       ];
-      console.log(instance.problems);
+      
       // Assert
       expect(instance.problems).toEqual(problems);
     });
