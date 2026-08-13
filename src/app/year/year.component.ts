@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
@@ -11,6 +11,11 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
   styleUrl: './year.component.css',
 })
 export class YearComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private runnerService = inject(RunnerService);
+  private challengeInfoService = inject(ChallengeInfoService);
+
   year = 0;
   noDays = 0;
   completionPercentage = 0;
@@ -22,13 +27,6 @@ export class YearComponent implements OnInit {
     timePart2: number;
     title: string;
   }[] = [];
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private runnerService: RunnerService,
-    private challengeInfoService: ChallengeInfoService
-  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {

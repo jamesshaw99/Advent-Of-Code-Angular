@@ -1,16 +1,19 @@
 <div class="container mt-5">
-    <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Overview</button>
-    <h1 class="text-center mb-4">Advent of Code {{year}}</h1>
-    <div *ngIf="dailyResults.length !== noDays" class="text-center mb-4">
+  <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Overview</button>
+  <h1 class="text-center mb-4">Advent of Code {{year}}</h1>
+  @if (dailyResults.length !== noDays) {
+    <div class="text-center mb-4">
       <h2 class="text-center mb-4">Days run: {{dailyResults.length}} of {{noDays}}</h2>
-      <mat-progress-bar 
-        mode="determinate" 
+      <mat-progress-bar
+        mode="determinate"
         [value]="completionPercentage"
         color="primary">
       </mat-progress-bar>
     </div>
-    <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let day of dailyResults">
+  }
+  <div class="row">
+    @for (day of dailyResults; track day) {
+      <div class="col-md-4 mb-3">
         <div class="card">
           <div class="card-body text-center">
             <h5 class="card-title">{{day.title}}</h5>
@@ -23,5 +26,6 @@
           </div>
         </div>
       </div>
-    </div>
+    }
   </div>
+</div>

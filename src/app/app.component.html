@@ -1,5 +1,7 @@
 <div class="snowflakes">
-  <div class="snowflake" *ngFor="let snowflake of snowflakeArray" #snowflake>❄️</div>
+  @for (snowflake of snowflakeArray; track snowflake) {
+    <div class="snowflake" #snowflake>❄️</div>
+  }
 </div>
 
 <div class="d-flex flex-column min-vh-100">
@@ -10,9 +12,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngFor="let info of yearInfo">
-          <a class="nav-link" href="/year/{{info.year}}">{{info.year}} [<span>{{info.stars}}<mat-icon>star</mat-icon></span>]</a>
-        </li>
+        @for (info of yearInfo; track info) {
+          <li class="nav-item">
+            <a class="nav-link" href="/year/{{info.year}}">{{info.year}} [<span>{{info.stars}}<mat-icon>star</mat-icon></span>]</a>
+          </li>
+        }
       </ul>
     </div>
   </nav>

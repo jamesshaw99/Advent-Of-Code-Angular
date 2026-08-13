@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { InputService } from './input.service';
 import { Subject } from 'rxjs';
 import { challengeInstances } from '../helpers/challenge-definitions';
@@ -9,6 +9,8 @@ import { RunnerResults } from '../models/RunnerResults';
   providedIn: 'root',
 })
 export class RunnerService {
+  private inputService = inject(InputService);
+
   challenges: Record<
     number,
     Record<
@@ -24,9 +26,7 @@ export class RunnerService {
     >
   > = {};
 
-  constructor(
-    private inputService: InputService
-  ) {
+  constructor() {
     this.initializeChallenges(challengeInstances);
   }
 

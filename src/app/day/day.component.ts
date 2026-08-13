@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
@@ -11,6 +11,11 @@ import { ChallengeInfoService } from '../services/challenge-info.service';
   styleUrl: './day.component.css',
 })
 export class DayComponent implements OnInit{
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private runnerService = inject(RunnerService);
+  private challengeInfoService = inject(ChallengeInfoService);
+
   year!: number;
   day!: number;
   result: { part1: string; part2: string } | null = null;
@@ -19,13 +24,6 @@ export class DayComponent implements OnInit{
     part1Description: string[];
     part2Description: string[];
   } | null = null;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private runnerService: RunnerService,
-    private challengeInfoService: ChallengeInfoService
-  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { ChallengeInfo } from '../models/ChallengeInfo';
 import { challengeInstances } from '../helpers/challenge-definitions';
@@ -8,9 +8,9 @@ import { challengeInstances } from '../helpers/challenge-definitions';
   providedIn: 'root'
 })
 export class ChallengeInfoService {
-  private challengeInfo: Record<number, Record<number, ChallengeInfo>> = {};
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  private challengeInfo: Record<number, Record<number, ChallengeInfo>> = {};
 
   getNumberOfDaysForYear(year: number): number {
     return challengeInstances.filter((challenge) => challenge.year === year)

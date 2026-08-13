@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
 import { RunnerService } from './services/runner.service';
 
 @Component({
@@ -8,12 +8,12 @@ import { RunnerService } from './services/runner.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, AfterViewInit {
+  private runnerService = inject(RunnerService);
+
   yearInfo: {year: number, days: number, stars: number}[] = [];
   snowflakeArray = Array(5).fill(0);
   title = 'advent-of-code';
   @ViewChildren('snowflake', { read: ElementRef }) snowflakes!: QueryList<ElementRef>;
-
-  constructor(private runnerService: RunnerService) {}
 
   ngOnInit(): void {
     this.yearInfo = this.runnerService.getYears();

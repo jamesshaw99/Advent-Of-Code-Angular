@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
 
 @Component({
@@ -9,8 +9,9 @@ import { RunnerService } from '../services/runner.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+  private runnerService = inject(RunnerService);
+
   yearInfo: {year: number, days: number, stars: number}[] = [];
-  constructor(private runnerService: RunnerService) {}
 
   ngOnInit(): void {
     this.yearInfo = this.runnerService.getYears();
