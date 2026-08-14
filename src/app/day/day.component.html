@@ -1,25 +1,27 @@
 <div class="container mt-5">
-  <button class="btn btn-secondary mb-3" (click)="goBack()">
-    Back to Year Overview
-  </button>
+  @if (vm$ | async; as vm) {
+    <button class="btn btn-secondary mb-3" (click)="goBack()">
+      Back to Year Overview
+    </button>
 
-  <h1 class="text-center mb-4">{{ challengeInfo?.title }}</h1>
+    <h1 class="text-center mb-4">{{ vm.challengeInfo?.title }}</h1>
 
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">--- Part One ---</h5>
-      <div [innerHTML]="challengeInfo?.part1Description"></div>
-      <h5 class="card-title mt-4">Solution</h5>
-      <p class="card-text">{{ result?.part1 }}</p>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">--- Part One ---</h5>
+        <div [innerHTML]="$safeNavigationMigration(vm.challengeInfo?.part1Description)"></div>
+        <h5 class="card-title mt-4">Solution</h5>
+        <p class="card-text">{{ vm.result?.part1 }}</p>
+      </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">--- Part Two ---</h5>
-      <div [innerHTML]="challengeInfo?.part2Description"></div>
-      <h5 class="card-title mt-4">Solution</h5>
-      <p class="card-text">{{ result?.part2 }}</p>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">--- Part Two ---</h5>
+        <div [innerHTML]="$safeNavigationMigration(vm.challengeInfo?.part2Description)"></div>
+        <h5 class="card-title mt-4">Solution</h5>
+        <p class="card-text">{{ vm.result?.part2 }}</p>
+      </div>
     </div>
-  </div>
+  }
 </div>

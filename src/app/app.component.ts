@@ -1,11 +1,14 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RunnerService } from './services/runner.service';
+import { MatIcon } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.css',
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: './app.component.css',
+    imports: [MatIcon, RouterOutlet],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   private runnerService = inject(RunnerService);

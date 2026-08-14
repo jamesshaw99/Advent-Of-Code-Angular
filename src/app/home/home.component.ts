@@ -1,12 +1,13 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-home',
-  standalone: false,
-  
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: './home.component.css',
+    imports: [MatIcon]
 })
 export class HomeComponent implements OnInit {
   private runnerService = inject(RunnerService);

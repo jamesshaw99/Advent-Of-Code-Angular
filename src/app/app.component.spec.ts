@@ -17,13 +17,12 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [RouterModule.forRoot([]), MatIconModule],
-      providers: [
+    imports: [RouterModule.forRoot([]), MatIconModule, AppComponent],
+    providers: [
         provideRouter([]),
         { provide: RunnerService, useClass: MockRunnerService },
-      ],
-    }).compileComponents();
+    ],
+}).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;

@@ -70,7 +70,7 @@ export class year2025day1 extends day {
     if (normalized < 0) {
       normalized += this.RANGE_SIZE;
     }
-    return normalized;
+    return normalized || 0;
   }
 
   countWrapsAndNormalize(

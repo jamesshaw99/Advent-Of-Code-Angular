@@ -1,5 +1,5 @@
 <div class="snowflakes">
-  @for (snowflake of snowflakeArray; track snowflake) {
+  @for (snowflake of snowflakeArray; track $index) {
     <div class="snowflake" #snowflake>❄️</div>
   }
 </div>

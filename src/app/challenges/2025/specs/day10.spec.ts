@@ -24,7 +24,7 @@ describe('2025 day 10', () => {
       };
 
       // Assert
-      expect(instance.machines).toContain(expectedMachine);
+      expect(instance.machines).toContainEqual(expectedMachine);
     });
   });
 

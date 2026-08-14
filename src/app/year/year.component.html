@@ -1,31 +1,33 @@
 <div class="container mt-5">
-  <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Overview</button>
-  <h1 class="text-center mb-4">Advent of Code {{year}}</h1>
-  @if (dailyResults.length !== noDays) {
-    <div class="text-center mb-4">
-      <h2 class="text-center mb-4">Days run: {{dailyResults.length}} of {{noDays}}</h2>
-      <mat-progress-bar
-        mode="determinate"
-        [value]="completionPercentage"
-        color="primary">
-      </mat-progress-bar>
-    </div>
-  }
-  <div class="row">
-    @for (day of dailyResults; track day) {
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body text-center">
-            <h5 class="card-title">{{day.title}}</h5>
-            <p class="card-text">Challenge summary for Day {{day.day}}</p>
-            <p class="card-text">Part 1 ({{day.timePart1}}ms)</p>
-            <p class="challenge-result" [innerHTML]="day.part1"></p>
-            <p class="card-text">Part 2 ({{day.timePart2}}ms)</p>
-            <p class="challenge-result" [innerHTML]="day.part2"></p>
-            <a href="/{{year}}/day/{{day.day}}" class="btn btn-primary">View Challenge</a>
-          </div>
-        </div>
+  @if (vm$ | async; as vm) {
+    <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Overview</button>
+    <h1 class="text-center mb-4">Advent of Code {{vm.year}}</h1>
+    @if (vm.dailyResults.length !== vm.noDays) {
+      <div class="text-center mb-4">
+        <h2 class="text-center mb-4">Days run: {{vm.dailyResults.length}} of {{vm.noDays}}</h2>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="vm.completionPercentage"
+          color="primary">
+        </mat-progress-bar>
       </div>
     }
-  </div>
+    <div class="row">
+      @for (day of vm.dailyResults; track day.day) {
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{day.title}}</h5>
+              <p class="card-text">Challenge summary for Day {{day.day}}</p>
+              <p class="card-text">Part 1 ({{day.timePart1}}ms)</p>
+              <p class="challenge-result" [innerHTML]="day.part1"></p>
+              <p class="card-text">Part 2 ({{day.timePart2}}ms)</p>
+              <p class="challenge-result" [innerHTML]="day.part2"></p>
+              <a href="/{{vm.year}}/day/{{day.day}}" class="btn btn-primary">View Challenge</a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
 </div>
