@@ -1,3 +1,17 @@
+import { year2018day1 } from '../challenges/2018/day1';
+import { year2018day2 } from '../challenges/2018/day2';
+import { year2018day3 } from '../challenges/2018/day3';
+import { year2018day4 } from '../challenges/2018/day4';
+import { year2018day5 } from '../challenges/2018/day5';
+import { year2018day6 } from '../challenges/2018/day6';
+import { year2018day7 } from '../challenges/2018/day7';
+import { year2018day8 } from '../challenges/2018/day8';
+import { year2018day9 } from '../challenges/2018/day9';
+import { year2018day10 } from '../challenges/2018/day10';
+import { year2018day11 } from '../challenges/2018/day11';
+import { year2018day12 } from '../challenges/2018/day12';
+import { year2018day13 } from '../challenges/2018/day13';
+import { year2018day14 } from '../challenges/2018/day14';
 import { year2019day1 } from '../challenges/2019/day1';
 import { year2019day2 } from '../challenges/2019/day2';
 import { year2019day3 } from '../challenges/2019/day3';
@@ -113,6 +127,20 @@ interface ChallengeInstance {
 }
 
 export const challengeInstances: ChallengeInstance[] = [
+{ year: 2018, day: 1, instance: new year2018day1() },
+{ year: 2018, day: 2, instance: new year2018day2() },
+{ year: 2018, day: 3, instance: new year2018day3() },
+{ year: 2018, day: 4, instance: new year2018day4() },
+{ year: 2018, day: 5, instance: new year2018day5() },
+{ year: 2018, day: 6, instance: new year2018day6() },
+{ year: 2018, day: 7, instance: new year2018day7() },
+{ year: 2018, day: 8, instance: new year2018day8() },
+{ year: 2018, day: 9, instance: new year2018day9() },
+{ year: 2018, day: 10, instance: new year2018day10() },
+{ year: 2018, day: 11, instance: new year2018day11() },
+{ year: 2018, day: 12, instance: new year2018day12() },
+{ year: 2018, day: 13, instance: new year2018day13() },
+{ year: 2018, day: 14, instance: new year2018day14() },
 { year: 2019, day: 1, instance: new year2019day1() },
 { year: 2019, day: 2, instance: new year2019day2() },
 { year: 2019, day: 3, instance: new year2019day3() },
