@@ -42,7 +42,8 @@ export class Amplifier {
       if (this.isThreeParameterOpCode(operationCode)) {
         this.executeThreeParamOp(operationCode, parameterModes);
       } else if (operationCode === 3 || operationCode === 4) {
-        this.executeInputOutput(operationCode, parameterModes);
+        const blocked = this.executeInputOutput(operationCode, parameterModes);
+        if (blocked) return blocked;
       } else if (operationCode === 5 || operationCode === 6) {
         this.executeJump(operationCode, parameterModes);
       } else {
@@ -95,13 +96,12 @@ export class Amplifier {
     this.programMem[position] = value;
   }
 
-  private executeInputOutput(opCode: number, modes: number[]): void {
+  private executeInputOutput(opCode: number, modes: number[]): ExitReason | null {
     const param = this.programMem[this.programCount++];
     if (opCode === 3) {
       if (this.inputIndex >= this.inputs.length) {
         this.programCount -= 2;
-        this.lastExitReason = ExitReason.NEED_INPUT;
-        throw new Error('BLOCKED');
+        return ExitReason.NEED_INPUT;
       }
       this.programMem[param] = this.inputs[this.inputIndex++];
     } else {
@@ -109,6 +109,7 @@ export class Amplifier {
       this.outputs.push(value);
       this.totalOutputs.push(value);
     }
+    return null;
   }
 
   private executeJump(opCode: number, modes: number[]): void {

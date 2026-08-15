@@ -14,44 +14,32 @@ export class year2019day7 extends day {
   override part1(): string | Promise<string> {
       this.phases = [0,1,2,3,4];
       this.listOfPossiblePhases = this.createAllPermutations(this.phases);
-      return `Highest signal from thrusters: ${Math.max(...this.runPermutations(false))}`
+      return `Highest signal from thrusters: ${Math.max(...this.runPermutations())}`
   }
 
-//   override part2(): string | Promise<string> {
-//       this.phases = [9,7,8,5,6];
-//       this.listOfPossiblePhases = this.createAllPermutations(this.phases);
-//       return `Highest signal from thrusters: ${Math.max(...this.runPermutations(true))}`
-//   }
+  override part2(): string | Promise<string> {
+      this.phases = [9,7,8,5,6];
+      this.listOfPossiblePhases = this.createAllPermutations(this.phases);
+      return `Highest signal from thrusters: ${Math.max(...this.runPermutations())}`
+  }
 
-  runPermutations(feedbackMode: boolean): number[] {
+  runPermutations(): number[] {
     const thrustOutputsPossible: number[] = [];
 
     for (const phaseSet of this.listOfPossiblePhases) {
       const amplifiers = this.createAmplifiersForPhaseSet(phaseSet);
-
       let ampIndex = 0;
-      let ampsRan = 0;
 
-      try {
-        do {
-          const amp = amplifiers[ampIndex];
+      while (amplifiers[amplifiers.length - 1].lastExitReason !== ExitReason.EXITED) {
+        const amp = amplifiers[ampIndex];
+        const nextIndex = (ampIndex + 1) % amplifiers.length;
+
+        if (amp.lastExitReason !== ExitReason.EXITED) {
           amp.runUntilBlockedOrExited();
+          amplifiers[nextIndex].addInputs(amp.getAvailableOutputs());
+        }
 
-          ampIndex = (ampIndex + 1) % amplifiers.length;
-          const nextAmp = amplifiers[ampIndex];
-
-          nextAmp.addInputs(amp.getAvailableOutputs());
-          ampsRan++;
-        } while (
-          this.shouldRunNextAmplifier(
-            amplifiers[ampIndex].lastExitReason,
-            feedbackMode,
-            ampsRan,
-            phaseSet.length
-          )
-        );
-      } catch (e) {
-        if ((e as Error).message !== 'BLOCKED') throw e;
+        ampIndex = nextIndex;
       }
 
       thrustOutputsPossible.push(...amplifiers[amplifiers.length - 1].totalOutputs);
@@ -86,21 +74,5 @@ export class year2019day7 extends day {
       }
       return amp;
     });
-  }
-
-  shouldRunNextAmplifier(
-    exitReason: ExitReason,
-    feedbackMode: boolean,
-    ampsRan: number,
-    numPhases: number
-  ): boolean {
-    const isBlocked = exitReason === ExitReason.NEED_INPUT;
-    const isExited = exitReason === ExitReason.EXITED;
-
-    if (!feedbackMode) {
-      return isBlocked && ampsRan < numPhases;
-    }
-
-    return isBlocked && !isExited;
   }
 }

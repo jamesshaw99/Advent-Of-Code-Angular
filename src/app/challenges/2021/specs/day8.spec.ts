@@ -19,7 +19,15 @@ describe('2021 day8', () => {
         dayInstance.preChallenge();
     });
 
-    it('should compile and run', () => {
-        expect(true).toBe(true);
+    describe('part1', () => {
+        it('counts easy-to-decode digits (1, 4, 7, 8) in the output values', () => {
+            expect(dayInstance.part1()).toBe('Count: 26');
+        });
+    });
+
+    describe('part2', () => {
+        it('decodes and sums all four-digit output values', () => {
+            expect(dayInstance.part2()).toBe('Sum of output values: 61229');
+        });
     });
 });

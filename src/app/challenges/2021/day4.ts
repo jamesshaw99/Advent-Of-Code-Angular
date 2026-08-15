@@ -52,8 +52,9 @@ export class year2021day4 extends day {
                 }
             }
             
-            if (activeBoards.length === 1 && winners.length === 1) {
-                return `Winner: ${winners[0].id}, score: ${winners[0].board.getScore()}`;
+            if (remaining.length === 0 && winners.length > 0) {
+                const lastWinner = winners[winners.length - 1];
+                return `Winner: ${lastWinner.id}, score: ${lastWinner.board.getScore()}`;
             }
             
             activeBoards = remaining;
