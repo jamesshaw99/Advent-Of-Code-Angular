@@ -74,20 +74,20 @@ describe('ChallengeInfoService', () => {
             //Arrange
             service['challengeInfo'] = {
                 2024: {
-                    1: new ChallengeInfo('Challenge 1', ['Part 1'], ['Part 2']),
+                    1: new ChallengeInfo('Challenge 1', 'Part 1', 'Part 2'),
                 },
             };
 
             //Act
             service.getChallengeInfo(2024, 1).subscribe((data) => {
                 //Assert
-                expect(data).toEqual(new ChallengeInfo('Challenge 1', ['Part 1'], ['Part 2']));
+                expect(data).toEqual(new ChallengeInfo('Challenge 1', 'Part 1', 'Part 2'));
             });
         });
 
         it('should fetch challenge info from api if not in storage', () => {
             //Arrange
-            const mockResponse = new ChallengeInfo('Challenge 1', ['Part 1'], ['Part 2']);
+            const mockResponse = new ChallengeInfo('Challenge 1', 'Part 1', 'Part 2');
 
             //Act
             service.getChallengeInfo(2024, 1).subscribe((data) => {
@@ -102,7 +102,7 @@ describe('ChallengeInfoService', () => {
 
         it('should handle error when fetching challenge info', () => {
             //Arrange
-            const defaultResponse = new ChallengeInfo('No data found', [], []);
+            const defaultResponse = new ChallengeInfo('No data found', '', '');
 
             //Act
             service.getChallengeInfo(2024, 1).subscribe((data) => {
@@ -122,7 +122,7 @@ describe('ChallengeInfoService', () => {
             const day = 1;
             service['challengeInfo'] = {
                 [year]: {
-                    [day]: { title: 'Cached Challenge Title', part1Description: [], part2Description: [] },
+                    [day]: { title: 'Cached Challenge Title', part1Description: '', part2Description: '' },
                 },
             };
 
@@ -135,7 +135,7 @@ describe('ChallengeInfoService', () => {
         it('should fetch the title from HTTP if not cached and then cache it', async () => {
             const year = 2025;
             const day = 1;
-            const mockResponse = { title: 'Fetched Challenge Title', part1Description: [], part2Description: [] };
+            const mockResponse = { title: 'Fetched Challenge Title', part1Description: '', part2Description: '' };
 
             service.getChallengeTitle(year, day).subscribe((title) => {
                 expect(title).toBe('Fetched Challenge Title');

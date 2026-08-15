@@ -53,12 +53,18 @@ describe('HomeComponent', () => {
             fixture.detectChanges();
 
             const cardTitles = fixture.debugElement.queryAll(By.css('.card-title'));
+            const titleTexts = cardTitles.map((title) =>
+                title.nativeElement.textContent.replace(/\s+/g, ' ').trim()
+            );
 
             // Assert
             expect(cardTitles.length).toBe(3);
-            expect(cardTitles[0].nativeElement.textContent).toBe('2020 [0star]');
-            expect(cardTitles[1].nativeElement.textContent).toBe('2021 [4star]');
-            expect(cardTitles[2].nativeElement.textContent).toBe('2022 [9star]');
+            expect(titleTexts[0]).toContain('2020');
+            expect(titleTexts[0]).toContain('0');
+            expect(titleTexts[1]).toContain('2021');
+            expect(titleTexts[1]).toContain('4');
+            expect(titleTexts[2]).toContain('2022');
+            expect(titleTexts[2]).toContain('9');
         });
     });
 

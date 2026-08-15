@@ -69,8 +69,8 @@ describe('DayComponent', () => {
         it('should fetch challenge info and run challenge on init', async () => {
             const challengeInfo = {
                 title: 'Test Challenge',
-                part1Description: ['Part 1 Description'],
-                part2Description: ['Part 2 Description'],
+                part1Description: 'Part 1 Description',
+                part2Description: 'Part 2 Description',
             };
             mockChallengeInfoService.getChallengeInfo.mockReturnValue(of(challengeInfo));
 
@@ -90,8 +90,8 @@ describe('DayComponent', () => {
         });
 
         it('should stop reflecting a previous day once navigation switches to a new one', async () => {
-            const infoFor5 = { title: 'Day 5', part1Description: ['5a'], part2Description: ['5b'] };
-            const infoFor6 = { title: 'Day 6', part1Description: ['6a'], part2Description: ['6b'] };
+            const infoFor5 = { title: 'Day 5', part1Description: '5a', part2Description: '5b' };
+            const infoFor6 = { title: 'Day 6', part1Description: '6a', part2Description: '6b' };
             mockChallengeInfoService.getChallengeInfo.mockImplementation((_year, day) => of(day === 5 ? infoFor5 : infoFor6));
 
             // runChallenge for day 5 never resolves within this test, simulating a slow/abandoned computation.
@@ -131,7 +131,7 @@ describe('DayComponent', () => {
         });
 
         it('should stop updating vm$ after the component is destroyed', async () => {
-            mockChallengeInfoService.getChallengeInfo.mockReturnValue(of({ title: 'Test Challenge', part1Description: [], part2Description: [] }));
+            mockChallengeInfoService.getChallengeInfo.mockReturnValue(of({ title: 'Test Challenge', part1Description: '', part2Description: '' }));
             let resolveResult!: (value: {
                 part1: string;
                 part2: string;
@@ -156,7 +156,7 @@ describe('DayComponent', () => {
 
     describe('goBack', () => {
         it('should navigate back to the current year view on goBack', async () => {
-            mockChallengeInfoService.getChallengeInfo.mockReturnValue(of({ title: 'Test Challenge', part1Description: [], part2Description: [] }));
+            mockChallengeInfoService.getChallengeInfo.mockReturnValue(of({ title: 'Test Challenge', part1Description: '', part2Description: '' }));
             mockRunnerService.runChallenge.mockResolvedValue({ part1: 'a', part2: 'b', timePart1: 0, timePart2: 0 });
 
             fixture.detectChanges();

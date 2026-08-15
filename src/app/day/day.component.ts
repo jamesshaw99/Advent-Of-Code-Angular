@@ -14,8 +14,8 @@ export interface ChallengeResult {
 
 export interface ChallengeDescription {
   title: string;
-  part1Description: string[];
-  part2Description: string[];
+  part1Description: string;
+  part2Description: string;
 }
 
 interface DayViewModel {

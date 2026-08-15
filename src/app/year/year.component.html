@@ -1,27 +1,33 @@
 <div class="container mt-5">
   @if (vm$ | async; as vm) {
-    <button class="btn btn-secondary mb-3" (click)="goBack()">Back to Overview</button>
-    <h1 class="text-center mb-4">Advent of Code {{vm.year}}</h1>
-    @if (vm.dailyResults.length !== vm.noDays) {
-      <div class="text-center mb-4">
-        <h2 class="text-center mb-4">Days run: {{vm.dailyResults.length}} of {{vm.noDays}}</h2>
+    <button class="btn btn-secondary mb-3" (click)="goBack()">← Back to Overview</button>
+    <div class="page-header">
+      <h1>Advent of Code {{vm.year}}</h1>
+      @if (vm.dailyResults.length !== vm.noDays) {
+        <p>Days run: {{vm.dailyResults.length}} of {{vm.noDays}}</p>
         <mat-progress-bar
           mode="determinate"
           [value]="vm.completionPercentage"
           color="primary">
         </mat-progress-bar>
-      </div>
-    }
+      }
+    </div>
     <div class="row">
       @for (day of vm.dailyResults; track day.day) {
         <div class="col-md-4 mb-3">
           <div class="card">
             <div class="card-body text-center">
               <h5 class="card-title">{{day.title}}</h5>
-              <p class="card-text">Challenge summary for Day {{day.day}}</p>
-              <p class="card-text">Part 1 ({{day.timePart1}}ms)</p>
+              <p class="card-text">Day {{day.day}}</p>
+              <p class="card-text mb-1">
+                Part 1
+                <span class="badge-time">{{day.timePart1}}ms</span>
+              </p>
               <p class="challenge-result" [innerHTML]="day.part1"></p>
-              <p class="card-text">Part 2 ({{day.timePart2}}ms)</p>
+              <p class="card-text mb-1">
+                Part 2
+                <span class="badge-time">{{day.timePart2}}ms</span>
+              </p>
               <p class="challenge-result" [innerHTML]="day.part2"></p>
               <a href="/{{vm.year}}/day/{{day.day}}" class="btn btn-primary">View Challenge</a>
             </div>

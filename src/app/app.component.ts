@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RunnerService } from './services/runner.service';
 import { MatIcon } from '@angular/material/icon';
 import { RouterOutlet } from '@angular/router';
+
+const THEME_STORAGE_KEY = 'aoc-theme';
 
 @Component({
     selector: 'app-root',
@@ -10,32 +12,39 @@ import { RouterOutlet } from '@angular/router';
     styleUrl: './app.component.css',
     imports: [MatIcon, RouterOutlet],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   private runnerService = inject(RunnerService);
 
   yearInfo: {year: number, days: number, stars: number}[] = [];
-  snowflakeArray = Array(5).fill(0);
   title = 'advent-of-code';
-  @ViewChildren('snowflake', { read: ElementRef }) snowflakes!: QueryList<ElementRef>;
+  isNavOpen = false;
+  isDarkMode = false;
 
   ngOnInit(): void {
     this.yearInfo = this.runnerService.getYears();
+    this.isDarkMode = this.resolveInitialTheme();
+    this.applyTheme();
   }
 
-  ngAfterViewInit() {
-    this.snowflakes.forEach((snowflake) => {
-      const element = snowflake.nativeElement;
+  toggleNav(): void {
+    this.isNavOpen = !this.isNavOpen;
+  }
 
-      const randomDelay = Math.random() * 5;
-      const randomXPosition = Math.random() * 100;
-      const randomDuration = 3 + Math.random() * 5;
-      const randomFontSize = 1 + Math.random() * 2;
+  toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem(THEME_STORAGE_KEY, this.isDarkMode ? 'dark' : 'light');
+    this.applyTheme();
+  }
 
-      element.style.animationDelay = `${randomDelay}s`;
-      element.style.animationDuration = `${randomDuration}s`;
-      element.style.fontSize = `${randomFontSize}rem`;
+  private resolveInitialTheme(): boolean {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored) {
+      return stored === 'dark';
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
 
-      element.style.left = `${randomXPosition}%`;
-    });
+  private applyTheme(): void {
+    document.documentElement.setAttribute('data-theme', this.isDarkMode ? 'dark' : 'light');
   }
 }
