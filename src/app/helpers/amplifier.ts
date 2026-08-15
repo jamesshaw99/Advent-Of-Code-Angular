@@ -53,11 +53,11 @@ export class Amplifier {
 
   private extractParameterModes(instruction: number): number[] {
     const modes: number[] = [0, 0, 0];
-    let modeValue = instruction / 100;
+    let modeValue = Math.floor(instruction / 100);
     let index = 0;
     while (modeValue > 0 && index < 3) {
       modes[index] = modeValue % 10;
-      modeValue = modeValue / 10;
+      modeValue = Math.floor(modeValue / 10);
       index++;
     }
 

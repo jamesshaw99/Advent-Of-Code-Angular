@@ -19,6 +19,9 @@ yarn-error.log*
 /coverage
 *.lcov
 
+# Backend cache of scraped AoC data
+backend/cache/
+
 # Environment variables
 .env
 .env.local

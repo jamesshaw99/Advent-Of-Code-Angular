@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, inject, ChangeDetectionStrategy } from '@
 import { RunnerService } from '../services/runner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
-import { BehaviorSubject, Subject, from, merge, scan, startWith, switchMap, takeUntil, map } from 'rxjs';
+import { BehaviorSubject, Subject, from, merge, of, scan, startWith, switchMap, takeUntil, map, catchError } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 export interface ChallengeResult {
@@ -59,7 +59,17 @@ export class DayComponent implements OnInit, OnDestroy {
           .pipe(map((challengeInfo) => ({ challengeInfo })));
 
         const result$ = from(this.runnerService.runChallenge(year, day)).pipe(
-          map((result) => ({ result }))
+          map((result) => ({ result })),
+          catchError((error) =>
+            of({
+              result: {
+                part1: `Error: ${error}`,
+                part2: `Error: ${error}`,
+                timePart1: 0,
+                timePart2: 0,
+              },
+            })
+          )
         );
 
         return merge(challengeInfo$, result$).pipe(

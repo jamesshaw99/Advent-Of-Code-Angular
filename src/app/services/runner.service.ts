@@ -74,6 +74,13 @@ export class RunnerService {
           resultsSubject.next(dayResult);
         } catch (error) {
           console.error(`Error running challenge for Day ${day}:`, error);
+          resultsSubject.next({
+            day,
+            part1: `Error: ${error}`,
+            part2: `Error: ${error}`,
+            timePart1: 0,
+            timePart2: 0,
+          });
         }
       });
 
@@ -88,7 +95,8 @@ export class RunnerService {
 
   async runChallenge(
     year: number,
-    day: number
+    day: number,
+    timeoutMs = 10000
   ): Promise<{
     part1: string;
     part2: string;
@@ -109,26 +117,35 @@ export class RunnerService {
       const worker = new Worker(
         new URL('../runner.worker.ts', import.meta.url)
       );
+      let settled = false;
 
-      worker.onmessage = ({ data }) => {
-        if (data.error) {
-          reject(data.stack);
-        } else {
-          resolve(data);
-        }
+      const timer = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        worker.terminate();
+        reject(`Day ${day} of ${year} timed out after ${timeoutMs}ms`);
+      }, timeoutMs);
+
+      const finish = (fn: () => void) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        fn();
         worker.terminate();
       };
+
+      worker.onmessage = ({ data }) => {
+        finish(() => (data.error ? reject(data.stack) : resolve(data)));
+      };
       worker.onerror = (err) => {
-        reject(err);
-        worker.terminate();
+        finish(() => reject(err));
       };
       this.inputService.loadInput(year, day).subscribe({
         next: (input) => {
           worker.postMessage({ year, day, input });
         },
         error: (err) => {
-          reject(`Input loading failed: ${err}`);
-          worker.terminate();
+          finish(() => reject(`Input loading failed: ${err}`));
         },
       });
     });

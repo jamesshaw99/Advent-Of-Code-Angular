@@ -77,6 +77,7 @@ const outputPath = path.join(
 fs.writeFile(outputPath, challengeLogicFile, (writeErr) => {
   if (writeErr) {
     console.error("Error writing to challenge-definitions.ts:", writeErr);
+    process.exitCode = 1;
   } else {
     console.log("challenge-definitions.ts updated successfully!");
   }
