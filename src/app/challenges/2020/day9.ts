@@ -1,6 +1,7 @@
 import { day } from '../../helpers/day';
 
 export class year2020day9 extends day {
+  preambleLen = 25;
   private data: number[] = [];
   private invalidNumber: number | null = null;
 
@@ -9,10 +10,8 @@ export class year2020day9 extends day {
   }
 
   override part1(): string {
-    const preambleLen = 25;
-
-    for (let i = preambleLen; i < this.data.length; i++) {
-      if (!this.hasTwoSum(i, preambleLen)) {
+    for (let i = this.preambleLen; i < this.data.length; i++) {
+      if (!this.hasTwoSum(i, this.preambleLen)) {
         this.invalidNumber = this.data[i];
         return `First invalid number: ${this.invalidNumber}`;
       }

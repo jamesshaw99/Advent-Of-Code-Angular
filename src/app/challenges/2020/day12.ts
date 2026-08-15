@@ -79,10 +79,10 @@ private instructions: Instruction[] = [];
           waypoint.x -= value;
           break;
         case 'L':
-          this.rotateWaypoint(waypoint, -value);
+          this.rotateWaypoint(waypoint, value);
           break;
         case 'R':
-          this.rotateWaypoint(waypoint, value);
+          this.rotateWaypoint(waypoint, -value);
           break;
         case 'F':
           ship.x += waypoint.x * value;
