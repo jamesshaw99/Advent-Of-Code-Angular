@@ -11,18 +11,18 @@ export class IO {
   private inputsLog: number[] = [];
   private outputsLog: number[] = [];
   private inputs: number[] = [];
-  private inputsIterator: Iterator<number>;
+  private inputIndex = 0;
   private paddleX = 0;
   private ballX = 0;
   private score = 0;
   private outputInterrupt = false;
+  private emptyInputValue = 0;
+  private blockOnEmptyInput = false;
 
   constructor(
     private executor: ProgramExecutor,
     private gameMode = false
-  ) {
-    this.inputsIterator = this.inputs[Symbol.iterator]();
-  }
+  ) {}
 
   out(value: number): void {
     if (this.outputInterrupt) {
@@ -41,12 +41,27 @@ export class IO {
       return this.calculateGameInput();
     }
 
-    const result = this.inputsIterator.next();
-    if (!result.done) {
-      return result.value;
+    if (this.inputIndex < this.inputs.length) {
+      return this.inputs[this.inputIndex++];
     }
 
-    return 0;
+    return this.emptyInputValue;
+  }
+
+  setEmptyInputValue(value: number): void {
+    this.emptyInputValue = value;
+  }
+
+  hasPendingInput(): boolean {
+    return this.inputIndex < this.inputs.length;
+  }
+
+  enableBlockOnEmptyInput(enabled: boolean): void {
+    this.blockOnEmptyInput = enabled;
+  }
+
+  wouldBlockOnInput(): boolean {
+    return this.blockOnEmptyInput && !this.gameMode && !this.hasPendingInput();
   }
 
   private updateGameState(): GameBoard {
@@ -95,21 +110,28 @@ export class IO {
   addInput(input: number): void {
     this.inputs.push(input);
     this.inputsLog.push(input);
-    this.inputsIterator = this.inputs[Symbol.iterator]();
   }
 
   clearInputs(): void {
     this.inputs = [];
-    this.inputsIterator = this.inputs[Symbol.iterator]();
+    this.inputIndex = 0;
   }
 
   setInputs(inputs: number[]): void {
     this.inputs = [...inputs];
-    this.inputsIterator = this.inputs[Symbol.iterator]();
+    this.inputIndex = 0;
   }
 
   getOutputsLog(): number[] {
     return [...this.outputsLog];
+  }
+
+  getOutputsLogLength(): number {
+    return this.outputsLog.length;
+  }
+
+  getOutputsLogSince(startIndex: number): number[] {
+    return this.outputsLog.slice(startIndex);
   }
 
   getScore(): number {

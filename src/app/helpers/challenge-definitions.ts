@@ -5,6 +5,24 @@ import { year2019day4 } from '../challenges/2019/day4';
 import { year2019day5 } from '../challenges/2019/day5';
 import { year2019day6 } from '../challenges/2019/day6';
 import { year2019day7 } from '../challenges/2019/day7';
+import { year2019day8 } from '../challenges/2019/day8';
+import { year2019day9 } from '../challenges/2019/day9';
+import { year2019day10 } from '../challenges/2019/day10';
+import { year2019day11 } from '../challenges/2019/day11';
+import { year2019day12 } from '../challenges/2019/day12';
+import { year2019day13 } from '../challenges/2019/day13';
+import { year2019day14 } from '../challenges/2019/day14';
+import { year2019day15 } from '../challenges/2019/day15';
+import { year2019day16 } from '../challenges/2019/day16';
+import { year2019day17 } from '../challenges/2019/day17';
+import { year2019day18 } from '../challenges/2019/day18';
+import { year2019day19 } from '../challenges/2019/day19';
+import { year2019day20 } from '../challenges/2019/day20';
+import { year2019day21 } from '../challenges/2019/day21';
+import { year2019day22 } from '../challenges/2019/day22';
+import { year2019day23 } from '../challenges/2019/day23';
+import { year2019day24 } from '../challenges/2019/day24';
+import { year2019day25 } from '../challenges/2019/day25';
 import { year2020day1 } from '../challenges/2020/day1';
 import { year2020day2 } from '../challenges/2020/day2';
 import { year2020day3 } from '../challenges/2020/day3';
@@ -102,6 +120,24 @@ export const challengeInstances: ChallengeInstance[] = [
 { year: 2019, day: 5, instance: new year2019day5() },
 { year: 2019, day: 6, instance: new year2019day6() },
 { year: 2019, day: 7, instance: new year2019day7() },
+{ year: 2019, day: 8, instance: new year2019day8() },
+{ year: 2019, day: 9, instance: new year2019day9() },
+{ year: 2019, day: 10, instance: new year2019day10() },
+{ year: 2019, day: 11, instance: new year2019day11() },
+{ year: 2019, day: 12, instance: new year2019day12() },
+{ year: 2019, day: 13, instance: new year2019day13() },
+{ year: 2019, day: 14, instance: new year2019day14() },
+{ year: 2019, day: 15, instance: new year2019day15() },
+{ year: 2019, day: 16, instance: new year2019day16() },
+{ year: 2019, day: 17, instance: new year2019day17() },
+{ year: 2019, day: 18, instance: new year2019day18() },
+{ year: 2019, day: 19, instance: new year2019day19() },
+{ year: 2019, day: 20, instance: new year2019day20() },
+{ year: 2019, day: 21, instance: new year2019day21() },
+{ year: 2019, day: 22, instance: new year2019day22() },
+{ year: 2019, day: 23, instance: new year2019day23() },
+{ year: 2019, day: 24, instance: new year2019day24() },
+{ year: 2019, day: 25, instance: new year2019day25() },
 { year: 2020, day: 1, instance: new year2020day1() },
 { year: 2020, day: 2, instance: new year2020day2() },
 { year: 2020, day: 3, instance: new year2020day3() },

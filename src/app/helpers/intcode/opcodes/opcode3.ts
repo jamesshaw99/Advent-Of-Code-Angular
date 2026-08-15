@@ -5,6 +5,11 @@ import { ParameterModeHelper } from '../parameter-mode';
 
 export class Opcode3 extends Opcode {
   override async run(executor: ProgramExecutor): Promise<void> {
+    if (executor.getIo().wouldBlockOnInput()) {
+      executor.pause();
+      return;
+    }
+
     const rawCode = executor.getAtPointerAndIncrement();
     const argument = executor.getAtPointerAndIncrement();
     const mode = ParameterModeHelper.modesFromRaw(rawCode)[0];

@@ -14,14 +14,16 @@ describe('Opcode3', () => {
         opcode = new Opcode3();
 
         mockIo = {
-            in: vi.fn().mockName("IO.in")
+            in: vi.fn().mockName("IO.in"),
+            wouldBlockOnInput: vi.fn().mockName("IO.wouldBlockOnInput").mockReturnValue(false)
         } as unknown as MockedObject<IO>;
 
         mockExecutor = {
             getAtPointerAndIncrement: vi.fn().mockName("ProgramExecutor.getAtPointerAndIncrement"),
             set: vi.fn().mockName("ProgramExecutor.set"),
             getWriteAddress: vi.fn().mockName("ProgramExecutor.getWriteAddress"),
-            getIo: vi.fn().mockName("ProgramExecutor.getIo")
+            getIo: vi.fn().mockName("ProgramExecutor.getIo"),
+            pause: vi.fn().mockName("ProgramExecutor.pause")
         } as unknown as MockedObject<ProgramExecutor>;
 
         mockExecutor.getIo.mockReturnValue(mockIo);
@@ -204,6 +206,20 @@ describe('Opcode3', () => {
 
             // Assert
             expect(mockExecutor.getWriteAddress).toHaveBeenCalledWith(1, argument); // Only first mode used
+        });
+
+        it('should pause without consuming the instruction when input would block', async () => {
+            // Arrange
+            mockIo.wouldBlockOnInput.mockReturnValue(true);
+
+            // Act
+            await opcode.run(mockExecutor);
+
+            // Assert
+            expect(mockExecutor.pause).toHaveBeenCalled();
+            expect(mockExecutor.getAtPointerAndIncrement).not.toHaveBeenCalled();
+            expect(mockIo.in).not.toHaveBeenCalled();
+            expect(mockExecutor.set).not.toHaveBeenCalled();
         });
     });
 

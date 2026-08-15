@@ -25,13 +25,20 @@ export class ProgramExecutor {
     this.io = new IO(this, gameMode);
   }
 
-  async run(): Promise<string> {
+  async run(maxInstructions?: number): Promise<string> {
     this.paused = false;
+    let executed = 0;
 
     while (!this.finished && !this.paused) {
+      if (maxInstructions !== undefined && executed >= maxInstructions) {
+        this.paused = true;
+        break;
+      }
+
       const info = OpcodeInfo.recognise(this.getAtPointer());
       const opcode = info.getOpcodeClass();
       await opcode.run(this);
+      executed++;
     }
     return "FINISHED";
   }

@@ -49,6 +49,40 @@ describe('IO', () => {
             // Assert
             expect(result).toBe(0);
         });
+
+        it('should return a configured empty-input value once inputs are exhausted', async () => {
+            // Arrange
+            io.setEmptyInputValue(-1);
+            io.setInputs([1]);
+
+            // Act
+            await io.in();
+            const result = await io.in();
+
+            // Assert
+            expect(result).toBe(-1);
+        });
+
+        it('should report whether blocking is enabled and input is unavailable', async () => {
+            // Arrange
+            io.enableBlockOnEmptyInput(true);
+            io.setInputs([1]);
+
+            // Act & Assert
+            expect(io.wouldBlockOnInput()).toBe(false);
+            await io.in();
+            expect(io.wouldBlockOnInput()).toBe(true);
+
+            io.addInput(2);
+            expect(io.wouldBlockOnInput()).toBe(false);
+        });
+
+        it('should never report blocking when enableBlockOnEmptyInput is off', async () => {
+            // Arrange (default state, no inputs queued)
+
+            // Act & Assert
+            expect(io.wouldBlockOnInput()).toBe(false);
+        });
     });
 
     describe('output operations', () => {
@@ -84,6 +118,25 @@ describe('IO', () => {
             // Assert
             expect(io.getLastOutput()).toBe(outputs[outputs.length - 1]);
             expect(io.getOutputsLog()).toEqual(outputs);
+        });
+
+        it('should report output log length without copying the whole log', () => {
+            // Arrange
+            [1, 2, 3].forEach(value => io.out(value));
+
+            // Act & Assert
+            expect(io.getOutputsLogLength()).toBe(3);
+        });
+
+        it('should return only outputs since a given index', () => {
+            // Arrange
+            [1, 2, 3, 4, 5].forEach(value => io.out(value));
+
+            // Act
+            const result = io.getOutputsLogSince(2);
+
+            // Assert
+            expect(result).toEqual([3, 4, 5]);
         });
     });
 
