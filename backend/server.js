@@ -70,7 +70,7 @@ app.get("/scrape/:year/:day", async (req, res) => {
   }
 
   const cached = readCachedDescription(year, day);
-  if (cached) {
+  if (cached && cached.part2Description) {
     res.json(cached);
     return;
   }

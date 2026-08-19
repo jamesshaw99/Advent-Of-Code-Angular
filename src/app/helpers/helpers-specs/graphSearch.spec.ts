@@ -1,4 +1,4 @@
-import { bfs, dijkstra } from '../graphSearch';
+import { bfs, dijkstra, dijkstraAll } from '../graphSearch';
 
 describe('graphSearch', () => {
   describe('bfs', () => {
@@ -47,6 +47,34 @@ describe('graphSearch', () => {
       const cost = dijkstra('A', node => node, node => edges[node], node => node === 'unreachable');
 
       expect(cost).toBe(Infinity);
+    });
+  });
+
+  describe('dijkstraAll', () => {
+    const edges: Record<string, { node: string; cost: number }[]> = {
+      A: [{ node: 'B', cost: 5 }, { node: 'C', cost: 1 }],
+      B: [{ node: 'D', cost: 1 }],
+      C: [{ node: 'B', cost: 1 }, { node: 'D', cost: 8 }],
+      D: [],
+    };
+
+    it('finds the best cost to every reachable node from a single seeded start', () => {
+      const result = dijkstraAll([{ node: 'A', cost: 0 }], node => node, node => edges[node]);
+
+      expect(result.get('A')).toBe(0);
+      expect(result.get('B')).toBe(2);
+      expect(result.get('C')).toBe(1);
+      expect(result.get('D')).toBe(3);
+    });
+
+    it('supports multiple seeded starts at once', () => {
+      const result = dijkstraAll(
+        [{ node: 'A', cost: 0 }, { node: 'D', cost: 10 }],
+        node => node,
+        node => edges[node]
+      );
+
+      expect(result.get('D')).toBe(3);
     });
   });
 });

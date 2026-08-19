@@ -108,6 +108,48 @@ export function bfs<T>(
 }
 
 /**
+ * Weighted shortest-path search from one or more seeded starting nodes. Returns the best
+ * known cost to every reachable node, visiting the whole graph rather than stopping early.
+ */
+export function dijkstraAll<T>(
+  starts: { node: T; cost: number }[],
+  key: (node: T) => string,
+  neighbors: (node: T) => WeightedEdge<T>[]
+): Map<string, number> {
+  const best = new Map<string, number>();
+  const heap = new MinHeap<T>();
+
+  for (const { node, cost } of starts) {
+    const startKey = key(node);
+    if (cost < (best.get(startKey) ?? Infinity)) {
+      best.set(startKey, cost);
+      heap.push(node, cost);
+    }
+  }
+
+  while (heap.size > 0) {
+    const current = heap.pop()!;
+    const currentKey = key(current.value);
+
+    if (current.priority > (best.get(currentKey) ?? Infinity)) {
+      continue;
+    }
+
+    for (const edge of neighbors(current.value)) {
+      const nextKey = key(edge.node);
+      const nextDistance = current.priority + edge.cost;
+
+      if (nextDistance < (best.get(nextKey) ?? Infinity)) {
+        best.set(nextKey, nextDistance);
+        heap.push(edge.node, nextDistance);
+      }
+    }
+  }
+
+  return best;
+}
+
+/**
  * Weighted shortest-path search. Returns the cost of the first node matching `isEnd`,
  * or Infinity if no such node is reachable.
  */

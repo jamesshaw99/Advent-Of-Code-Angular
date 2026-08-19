@@ -107,6 +107,19 @@ import { year2024day9 } from '../challenges/2024/day9';
 import { year2024day10 } from '../challenges/2024/day10';
 import { year2024day11 } from '../challenges/2024/day11';
 import { year2024day12 } from '../challenges/2024/day12';
+import { year2024day13 } from '../challenges/2024/day13';
+import { year2024day14 } from '../challenges/2024/day14';
+import { year2024day15 } from '../challenges/2024/day15';
+import { year2024day16 } from '../challenges/2024/day16';
+import { year2024day17 } from '../challenges/2024/day17';
+import { year2024day18 } from '../challenges/2024/day18';
+import { year2024day19 } from '../challenges/2024/day19';
+import { year2024day20 } from '../challenges/2024/day20';
+import { year2024day21 } from '../challenges/2024/day21';
+import { year2024day22 } from '../challenges/2024/day22';
+import { year2024day23 } from '../challenges/2024/day23';
+import { year2024day24 } from '../challenges/2024/day24';
+import { year2024day25 } from '../challenges/2024/day25';
 import { year2025day1 } from '../challenges/2025/day1';
 import { year2025day2 } from '../challenges/2025/day2';
 import { year2025day3 } from '../challenges/2025/day3';
@@ -243,6 +256,19 @@ export const challengesByYear: Record<number, Record<number, InstanceType<typeof
     10: new year2024day10(),
     11: new year2024day11(),
     12: new year2024day12(),
+    13: new year2024day13(),
+    14: new year2024day14(),
+    15: new year2024day15(),
+    16: new year2024day16(),
+    17: new year2024day17(),
+    18: new year2024day18(),
+    19: new year2024day19(),
+    20: new year2024day20(),
+    21: new year2024day21(),
+    22: new year2024day22(),
+    23: new year2024day23(),
+    24: new year2024day24(),
+    25: new year2024day25(),
   },
   2025: {
     1: new year2025day1(),
