@@ -1,4 +1,5 @@
 import { day } from '../../helpers/day';
+import { lcmAll } from '../../helpers/mathUtils';
 
 type Axes = [number, number, number];
 
@@ -39,7 +40,7 @@ export class year2019day12 extends day {
 
   override part2(): string {
     const cycleLengths = [0, 1, 2].map((axis) => this.findAxisCycleLength(axis));
-    const overallCycle = cycleLengths.reduce((lcmSoFar, len) => this.lcm(lcmSoFar, len));
+    const overallCycle = lcmAll(cycleLengths);
 
     return `Steps until the system repeats its initial state: ${overallCycle}`;
   }
@@ -98,13 +99,5 @@ export class year2019day12 extends day {
     } while (!(velocities.every((v) => v === 0) && positions.every((p, i) => p === initialPositions[i])));
 
     return steps;
-  }
-
-  private lcm(a: number, b: number): number {
-    return (a / this.gcd(a, b)) * b;
-  }
-
-  private gcd(a: number, b: number): number {
-    return b === 0 ? a : this.gcd(b, a % b);
   }
 }

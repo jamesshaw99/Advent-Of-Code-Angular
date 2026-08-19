@@ -1,4 +1,5 @@
 import { day } from '../../helpers/day';
+import { manhattanDistance } from '../../helpers/grid';
 
 export class year2023day11 extends day {
     emptyRows: number[] = [];
@@ -47,7 +48,7 @@ export class year2023day11 extends day {
             const srcGalaxy = this.findLocationAfterExpansion(this.galaxies[i], expansionRatio);
             for(let j = i + 1; j < this.galaxies.length; j++){
                 const dstGalaxy = this.findLocationAfterExpansion(this.galaxies[j], expansionRatio);
-                totalDistance += Math.abs(srcGalaxy[0] - dstGalaxy[0]) + Math.abs(srcGalaxy[1] - dstGalaxy[1]);
+                totalDistance += manhattanDistance(srcGalaxy[0], srcGalaxy[1], dstGalaxy[0], dstGalaxy[1]);
             }
         }
         return totalDistance;

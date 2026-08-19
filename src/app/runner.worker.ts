@@ -1,12 +1,10 @@
-import { challengeInstances } from './helpers/challenge-definitions';
+import { challengesByYear } from './helpers/challenge-definitions';
 
 addEventListener('message', async ({ data }) => {
   const { year, day, input } = data;
 
   try {
-    const challenge = challengeInstances.find(
-      (item) => item.year === year && item.day === day
-    )?.instance;
+    const challenge = challengesByYear[year]?.[day];
 
     if (!challenge) {
       throw new Error(`Challenge for Year ${year}, Day ${day} not found.`);

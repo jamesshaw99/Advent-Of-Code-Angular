@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClientTesting, HttpTestingController, } from '@angular/common/http/testing';
 import { RunnerService } from '../runner.service';
 import { InputService } from '../input.service';
-import { challengeInstances } from '../../helpers/challenge-definitions';
+import { challengesByYear } from '../../helpers/challenge-definitions';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { RunnerResults } from '../../models/RunnerResults';
@@ -13,22 +13,16 @@ describe('RunnerService', () => {
     let service: RunnerService;
     let inputService: MockedObject<InputService>;
     let httpMock: HttpTestingController;
-    let mockChallengeInstances: {
-        year: number;
-        day: number;
-        instance: day;
-    }[];
+    let mockChallengesByYear: Record<number, Record<number, day>>;
 
     beforeEach(() => {
         inputService = {
             loadInput: vi.fn().mockName("InputService.loadInput")
         } as unknown as MockedObject<InputService>;
 
-        mockChallengeInstances = [
-            {
-                year: 2024,
-                day: 1,
-                instance: (() => {
+        mockChallengesByYear = {
+            2024: {
+                1: (() => {
                     const instance = new day();
                     vi.spyOn(instance, 'run').mockResolvedValue({
                         part1: 'result1',
@@ -38,11 +32,7 @@ describe('RunnerService', () => {
                     });
                     return instance;
                 })(),
-            },
-            {
-                year: 2024,
-                day: 2,
-                instance: (() => {
+                2: (() => {
                     const instance = new day();
                     vi.spyOn(instance, 'run').mockResolvedValue({
                         part1: 'result2',
@@ -52,11 +42,7 @@ describe('RunnerService', () => {
                     });
                     return instance;
                 })(),
-            },
-            {
-                year: 2024,
-                day: 3,
-                instance: (() => {
+                3: (() => {
                     const instance = new day();
                     vi.spyOn(instance, 'run').mockResolvedValue({
                         part1: 'result3',
@@ -67,7 +53,7 @@ describe('RunnerService', () => {
                     return instance;
                 })(),
             },
-        ];
+        };
 
         TestBed.configureTestingModule({
             providers: [
@@ -81,8 +67,8 @@ describe('RunnerService', () => {
         service = TestBed.inject(RunnerService);
         httpMock = TestBed.inject(HttpTestingController);
 
-        service.challenges = [];
-        service.initializeChallenges(mockChallengeInstances);
+        service.challenges = {};
+        service.initializeChallenges(mockChallengesByYear);
     });
 
     afterEach(() => {
@@ -90,9 +76,9 @@ describe('RunnerService', () => {
     });
 
     describe('initializeChallenges', () => {
-        it('should initialize challenges from challengeInstances', () => {
+        it('should initialize challenges from challengesByYear', () => {
             // Act
-            service.initializeChallenges(mockChallengeInstances);
+            service.initializeChallenges(mockChallengesByYear);
 
             // Assert
             expect(service['challenges'][2024][1]).toBeDefined();
@@ -103,7 +89,7 @@ describe('RunnerService', () => {
     describe('getYears', () => {
         it('should return years with challenges', () => {
             // Arrange
-            service.initializeChallenges(challengeInstances);
+            service.initializeChallenges(challengesByYear);
 
             // Act
             const years = service.getYears();

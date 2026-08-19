@@ -3,8 +3,7 @@ import { HttpTestingController, provideHttpClientTesting, } from '@angular/commo
 import { ChallengeInfoService } from '../challenge-info.service';
 import { provideHttpClient, withXhr } from '@angular/common/http';
 import { ChallengeInfo } from '../../models/ChallengeInfo';
-import { challengeInstances } from '../../helpers/challenge-definitions';
-import { day } from '../../helpers/day';
+import { challengesByYear } from '../../helpers/challenge-definitions';
 
 describe('ChallengeInfoService', () => {
     let service: ChallengeInfoService;
@@ -30,39 +29,21 @@ describe('ChallengeInfoService', () => {
     });
 
     describe('getNumberOfDaysForYear', () => {
-        it('should return the number of days for 2023', () => {
+        it('should return the number of days actually defined for a real year', () => {
             // Arrange
-            vi.spyOn(challengeInstances, 'filter').mockReturnValue([
-                { year: 2023, day: 1, instance: new day() },
-                { year: 2023, day: 2, instance: new day() },
-            ]);
+            const [yearWithChallenges] = Object.keys(challengesByYear).map(Number);
+            const expectedDays = Object.keys(challengesByYear[yearWithChallenges]).length;
 
             // Act
-            const result = service.getNumberOfDaysForYear(2023);
+            const result = service.getNumberOfDaysForYear(yearWithChallenges);
 
             // Assert
-            expect(result).toBe(2);
+            expect(result).toBe(expectedDays);
         });
 
-        it('should return the number of days for 2024', () => {
-            // Arrange
-            vi.spyOn(challengeInstances, 'filter').mockReturnValue([
-                { year: 2024, day: 1, instance: new day() },
-            ]);
-
+        it('should return 0 if no challenges exist for the year', () => {
             // Act
-            const result = service.getNumberOfDaysForYear(2024);
-
-            // Assert
-            expect(result).toBe(1);
-        });
-
-        it('should return 0 if no challenges for the year', () => {
-            // Arrange
-            vi.spyOn(challengeInstances, 'filter').mockReturnValue([]);
-
-            // Act
-            const result = service.getNumberOfDaysForYear(2025);
+            const result = service.getNumberOfDaysForYear(1900);
 
             // Assert
             expect(result).toBe(0);

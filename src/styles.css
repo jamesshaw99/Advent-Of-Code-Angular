@@ -41,12 +41,6 @@ html, body {
   height: 100%;
 }
 
-:host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 body {
   margin: 0;
   background-color: var(--bg);

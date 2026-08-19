@@ -1,4 +1,5 @@
 import { day } from '../../helpers/day';
+import { runUntilCycleOrTerminal } from '../../helpers/cycleDetection';
 
 interface Instruction {
   operation: string;
@@ -7,6 +8,11 @@ interface Instruction {
 
 interface ExecutionResult {
   success: boolean;
+  accumulator: number;
+}
+
+interface ProgramState {
+  pc: number;
   accumulator: number;
 }
 
@@ -52,34 +58,28 @@ export class year2020day8 extends day {
   }
 
   private executeProgram(instructions: Instruction[]): ExecutionResult {
-    let accumulator = 0;
-    let programCounter = 0;
-    const visited = new Set<number>();
-
-    while (programCounter < instructions.length) {
-      if (visited.has(programCounter)) {
-        return { success: false, accumulator };
-      }
-
-      visited.add(programCounter);
-      const { operation, argument } = instructions[programCounter];
+    const step = (state: ProgramState): ProgramState => {
+      const { operation, argument } = instructions[state.pc];
 
       switch (operation) {
         case 'acc':
-          accumulator += argument;
-          programCounter++;
-          break;
+          return { pc: state.pc + 1, accumulator: state.accumulator + argument };
         case 'jmp':
-          programCounter += argument;
-          break;
+          return { pc: state.pc + argument, accumulator: state.accumulator };
         case 'nop':
-          programCounter++;
-          break;
+          return { pc: state.pc + 1, accumulator: state.accumulator };
         default:
           throw new Error(`Unknown operation: ${operation}`);
       }
-    }
+    };
 
-    return { success: true, accumulator };
+    const result = runUntilCycleOrTerminal<ProgramState>(
+      { pc: 0, accumulator: 0 },
+      step,
+      (state) => String(state.pc),
+      (state) => state.pc >= instructions.length
+    );
+
+    return { success: result.terminated, accumulator: result.state.accumulator };
   }
 }

@@ -1,4 +1,5 @@
 import { day } from '../../helpers/day';
+import { manhattanDistance } from '../../helpers/grid';
 
 interface Point {
   x: number;
@@ -100,7 +101,11 @@ export class year2019day10 extends day {
     }
 
     for (const points of groups.values()) {
-      points.sort((a, b) => this.manhattanDistance(station, a) - this.manhattanDistance(station, b));
+      points.sort(
+        (a, b) =>
+          manhattanDistance(station.x, station.y, a.x, a.y) -
+          manhattanDistance(station.x, station.y, b.x, b.y)
+      );
     }
 
     return groups;
@@ -116,9 +121,5 @@ export class year2019day10 extends day {
     }
 
     return angle;
-  }
-
-  private manhattanDistance(a: Point, b: Point): number {
-    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
   }
 }

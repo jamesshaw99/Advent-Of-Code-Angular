@@ -1,7 +1,7 @@
 import { provideZoneChangeDetection, importProvidersFrom } from "@angular/core";
 
 import { InputService } from "./app/services/input.service";
-import { challengeInstances } from "./app/helpers/challenge-definitions";
+import { challengesByYear } from "./app/helpers/challenge-definitions";
 import { provideHttpClient, withXhr } from "@angular/common/http";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
@@ -17,7 +17,7 @@ bootstrapApplication(AppComponent, {
         provideRouter(routes),
         provideZoneChangeDetection({ eventCoalescing: true }),
         InputService,
-        { provide: 'CHALLENGES', useValue: challengeInstances },
+        { provide: 'CHALLENGES', useValue: challengesByYear },
         provideHttpClient(withXhr()),
         provideAnimationsAsync()
     ]

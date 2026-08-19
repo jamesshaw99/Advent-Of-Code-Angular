@@ -86,7 +86,7 @@ describe('DayComponent', () => {
             expect(latestVm().challengeInfo).toEqual(challengeInfo);
             expect(mockChallengeInfoService.getChallengeInfo).toHaveBeenCalledWith(2023, 5);
             expect(latestVm().result).toEqual(result);
-            expect(mockRunnerService.runChallenge).toHaveBeenCalledWith(2023, 5);
+            expect(mockRunnerService.runChallenge).toHaveBeenCalledWith(2023, 5, undefined, expect.any(AbortSignal));
         });
 
         it('should stop reflecting a previous day once navigation switches to a new one', async () => {

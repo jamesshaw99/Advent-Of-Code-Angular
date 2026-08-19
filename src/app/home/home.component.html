@@ -13,7 +13,7 @@
               <span class="badge-gold"><mat-icon>star</mat-icon>{{info.stars}}</span>
             </h5>
             <p class="card-text">Days completed: {{info.days}}/{{info.year >= 2025 ? 12 : 25}}</p>
-            <a href="/year/{{info.year}}" class="btn btn-primary">View {{info.year}}</a>
+            <a [routerLink]="['/year', info.year]" class="btn btn-primary">View {{info.year}}</a>
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
 import { day } from '../../helpers/day';
+import { ORTHOGONAL_DIRECTIONS, gridNeighbors, inBounds, parseCharGrid } from '../../helpers/grid';
+import { bfs } from '../../helpers/graphSearch';
 
 interface Region {
   plantType: string;
@@ -13,12 +15,7 @@ interface RegionMetrics {
 }
 
 export class year2024day12 extends day {
-  directions: number[][] = [
-    [-1, 0],
-    [0, 1],
-    [1, 0],
-    [0, -1],
-  ];
+  directions: readonly [number, number][] = ORTHOGONAL_DIRECTIONS;
   grid: string[][] = [];
   rows = 0;
   cols = 0;
@@ -27,7 +24,7 @@ export class year2024day12 extends day {
   metrics: RegionMetrics[] = [];
 
   public override preChallenge(): void {
-    this.grid = this.input.map((line) => line.split(''));
+    this.grid = parseCharGrid(this.input);
     this.rows = this.grid.length;
     this.cols = this.grid[0].length;
     this.visited = Array(this.rows)
@@ -81,29 +78,20 @@ export class year2024day12 extends day {
     visited: boolean[][]
   ): Region {
     const plantType = this.grid[startRow][startCol];
-    const queue: [number, number][] = [[startRow, startCol]];
+
+    const componentNodes = bfs<[number, number]>(
+      [startRow, startCol],
+      ([row, col]) => `${row},${col}`,
+      ([row, col]) =>
+        gridNeighbors(row, col, this.rows, this.cols, this.directions).filter(
+          ([nr, nc]) => this.grid[nr][nc] === plantType
+        )
+    );
+
     const cells = new Set<string>();
-
-    visited[startRow][startCol] = true;
-    cells.add(`${startRow},${startCol}`);
-
-    while (queue.length > 0) {
-      const [row, col] = queue.shift()!;
-
-      for (const [dr, dc] of this.directions) {
-        const newRow = row + dr;
-        const newCol = col + dc;
-
-        if (
-          this.isValidCell(newRow, newCol) &&
-          !visited[newRow][newCol] &&
-          this.grid[newRow][newCol] === plantType
-        ) {
-          visited[newRow][newCol] = true;
-          queue.push([newRow, newCol]);
-          cells.add(`${newRow},${newCol}`);
-        }
-      }
+    for (const { node: [row, col] } of componentNodes.values()) {
+      visited[row][col] = true;
+      cells.add(`${row},${col}`);
     }
 
     return {
@@ -114,7 +102,7 @@ export class year2024day12 extends day {
   }
 
   isValidCell(row: number, col: number): boolean {
-    return row >= 0 && row < this.rows && col >= 0 && col < this.cols;
+    return inBounds(row, col, this.rows, this.cols);
   }
 
   calculatePerimeter(region: Region): number {

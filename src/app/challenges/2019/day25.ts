@@ -57,6 +57,10 @@ export class year2019day25 extends day {
     return 'Could not safely map the ship after repeated resets';
   }
 
+  override part2(): string | Promise<string> {
+    return 'Free star'
+  }
+
   private async explore(knownDangerous: Set<string>): Promise<ExploreResult> {
     const computer = new ProgramExecutor(this.text);
     computer.getIo().enableBlockOnEmptyInput(true);

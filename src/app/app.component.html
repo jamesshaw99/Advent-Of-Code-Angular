@@ -1,6 +1,6 @@
 <div class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">🎄 Advent of Code</a>
+    <a class="navbar-brand" routerLink="/">🎄 Advent of Code</a>
     <button class="navbar-toggler" type="button" (click)="toggleNav()" [attr.aria-expanded]="isNavOpen" aria-controls="navbarNav" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,7 +8,7 @@
       <ul class="navbar-nav ms-auto">
         @for (info of yearInfo; track info) {
           <li class="nav-item">
-            <a class="nav-link" href="/year/{{info.year}}">
+            <a class="nav-link" [routerLink]="['/year', info.year]">
               {{info.year}}
               <span class="badge-gold"><mat-icon>star</mat-icon>{{info.stars}}</span>
             </a>

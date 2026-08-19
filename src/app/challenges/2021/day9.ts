@@ -1,11 +1,12 @@
 import { day } from "../../helpers/day";
+import { gridNeighbors, parseDigitGrid } from "../../helpers/grid";
+import { bfs } from "../../helpers/graphSearch";
 
 export class year2021day9 extends day {
     heightmap: number[][] = [];
-    private readonly directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 
     override preChallenge(): void {
-        this.heightmap = this.input.map(row => [...row].map(char => parseInt(char)));
+        this.heightmap = parseDigitGrid(this.input);
     }
 
     override part1(): string {
@@ -54,44 +55,16 @@ export class year2021day9 extends day {
     }
 
     private getValidNeighbors(y: number, x: number): [number, number][] {
-        const neighbors: [number, number][] = [];
-        const rows = this.heightmap.length;
-        const cols = this.heightmap[0].length;
-        
-        for (const [dy, dx] of this.directions) {
-            const ny = y + dy;
-            const nx = x + dx;
-            
-            if (ny >= 0 && ny < rows && nx >= 0 && nx < cols) {
-                neighbors.push([ny, nx]);
-            }
-        }
-        
-        return neighbors;
+        return gridNeighbors(y, x, this.heightmap.length, this.heightmap[0].length);
     }
 
     private getBasinSize(startY: number, startX: number): number {
-        const visited = new Set<string>();
-        const queue: [number, number][] = [[startY, startX]];
-        
-        while (queue.length > 0) {
-            const [y, x] = queue.shift()!;
-            const key = `${y},${x}`;
-            
-            if (visited.has(key) || this.heightmap[y][x] === 9) {
-                continue;
-            }
-            
-            visited.add(key);
-            
-            for (const [ny, nx] of this.getValidNeighbors(y, x)) {
-                const neighborKey = `${ny},${nx}`;
-                if (!visited.has(neighborKey) && this.heightmap[ny][nx] !== 9) {
-                    queue.push([ny, nx]);
-                }
-            }
-        }
-        
+        const visited = bfs<[number, number]>(
+            [startY, startX],
+            ([y, x]) => `${y},${x}`,
+            ([y, x]) => this.getValidNeighbors(y, x).filter(([ny, nx]) => this.heightmap[ny][nx] !== 9)
+        );
+
         return visited.size;
     }
 }

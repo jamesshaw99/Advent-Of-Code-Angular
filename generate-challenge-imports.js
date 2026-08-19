@@ -47,27 +47,29 @@ const importStatements = sortedChallengeFiles
   })
   .join("\n");
 
-const challengeArray = sortedChallengeFiles
-  .map(({ year, filePath }) => {
-    const dayMatch = filePath.match(/day(\d{1,2})/);
-    const day = dayMatch ? parseInt(dayMatch[1], 10) : 0;
-    const className = `year${year}day${day}`;
-    return `{ year: ${year}, day: ${day}, instance: new ${className}() }`;
+const years = [...new Set(sortedChallengeFiles.map(({ year }) => year))];
+
+const yearBlocks = years
+  .map((year) => {
+    const dayEntries = sortedChallengeFiles
+      .filter((f) => f.year === year)
+      .map(({ filePath }) => {
+        const day = parseInt(filePath.match(/day(\d{1,2})/)[1], 10);
+        const className = `year${year}day${day}`;
+        return `    ${day}: new ${className}(),`;
+      })
+      .join("\n");
+
+    return `  ${year}: {\n${dayEntries}\n  },`;
   })
-  .join(",\n");
+  .join("\n");
 
 const challengeLogicFile = `${importStatements}
 import { day } from './day';
 
-interface ChallengeInstance {
-  year: number;
-  day: number;
-  instance: InstanceType<typeof day>;
-}
-
-export const challengeInstances: ChallengeInstance[] = [
-${challengeArray}
-];
+export const challengesByYear: Record<number, Record<number, InstanceType<typeof day>>> = {
+${yearBlocks}
+};
 `;
 
 const outputPath = path.join(

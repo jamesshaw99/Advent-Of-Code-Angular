@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Params } from '@angular/router';
 import { ChallengeInfoService } from '../services/challenge-info.service';
-import { BehaviorSubject, Subject, from, merge, of, scan, startWith, switchMap, takeUntil, map, catchError } from 'rxjs';
+import { Observable, from, merge, of, scan, startWith, map, catchError, finalize } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { RouteViewModelComponent } from '../shared/route-view-model.component';
 
 export interface ChallengeResult {
   part1: string;
@@ -32,61 +33,46 @@ interface DayViewModel {
     styleUrl: './day.component.css',
     imports: [AsyncPipe],
 })
-export class DayComponent implements OnInit, OnDestroy {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+export class DayComponent extends RouteViewModelComponent<DayViewModel> {
   private runnerService = inject(RunnerService);
   private challengeInfoService = inject(ChallengeInfoService);
 
-  private destroy$ = new Subject<void>();
-  private vmSubject = new BehaviorSubject<DayViewModel>({
-    year: 0,
-    day: 0,
-    result: null,
-    challengeInfo: null,
-  });
-  vm$ = this.vmSubject.asObservable();
-
-  ngOnInit(): void {
-    this.route.params.pipe(
-      switchMap((params) => {
-        const year = +params['year'];
-        const day = +params['day'];
-        const base: DayViewModel = { year, day, result: null, challengeInfo: null };
-
-        const challengeInfo$ = this.challengeInfoService
-          .getChallengeInfo(year, day)
-          .pipe(map((challengeInfo) => ({ challengeInfo })));
-
-        const result$ = from(this.runnerService.runChallenge(year, day)).pipe(
-          map((result) => ({ result })),
-          catchError((error) =>
-            of({
-              result: {
-                part1: `Error: ${error}`,
-                part2: `Error: ${error}`,
-                timePart1: 0,
-                timePart2: 0,
-              },
-            })
-          )
-        );
-
-        return merge(challengeInfo$, result$).pipe(
-          scan((acc, partial) => ({ ...acc, ...partial }), base),
-          startWith(base),
-        );
-      }),
-      takeUntil(this.destroy$),
-    ).subscribe((vm) => this.vmSubject.next(vm));
+  protected getInitialVm(): DayViewModel {
+    return { year: 0, day: 0, result: null, challengeInfo: null };
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  protected buildViewModel$(params: Params): Observable<DayViewModel> {
+    const year = +params['year'];
+    const day = +params['day'];
+    const base: DayViewModel = { year, day, result: null, challengeInfo: null };
+    const abortController = new AbortController();
+
+    const challengeInfo$ = this.challengeInfoService
+      .getChallengeInfo(year, day)
+      .pipe(map((challengeInfo) => ({ challengeInfo })));
+
+    const result$ = from(this.runnerService.runChallenge(year, day, undefined, abortController.signal)).pipe(
+      map((result) => ({ result })),
+      catchError((error) =>
+        of({
+          result: {
+            part1: `Error: ${error}`,
+            part2: `Error: ${error}`,
+            timePart1: 0,
+            timePart2: 0,
+          },
+        })
+      )
+    );
+
+    return merge(challengeInfo$, result$).pipe(
+      scan((acc, partial) => ({ ...acc, ...partial }), base),
+      startWith(base),
+      finalize(() => abortController.abort()),
+    );
   }
 
   goBack(): void {
-    this.router.navigate(['/year/' + this.vmSubject.value.year]);
+    this.router.navigate(['/year/' + this.currentVm.year]);
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RunnerService } from './services/runner.service';
 import { MatIcon } from '@angular/material/icon';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { YearInfo } from './models/YearInfo';
 
 const THEME_STORAGE_KEY = 'aoc-theme';
 
@@ -10,12 +11,12 @@ const THEME_STORAGE_KEY = 'aoc-theme';
     templateUrl: './app.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: './app.component.css',
-    imports: [MatIcon, RouterOutlet],
+    imports: [MatIcon, RouterOutlet, RouterLink],
 })
 export class AppComponent implements OnInit {
   private runnerService = inject(RunnerService);
 
-  yearInfo: {year: number, days: number, stars: number}[] = [];
+  yearInfo: YearInfo[] = [];
   title = 'advent-of-code';
   isNavOpen = false;
   isDarkMode = false;

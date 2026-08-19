@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { InputService } from './input.service';
 import { Subject } from 'rxjs';
-import { challengeInstances } from '../helpers/challenge-definitions';
+import { challengesByYear } from '../helpers/challenge-definitions';
 import { day } from '../helpers/day';
 import { RunnerResults } from '../models/RunnerResults';
+import { YearInfo } from '../models/YearInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -27,36 +28,32 @@ export class RunnerService {
   > = {};
 
   constructor() {
-    this.initializeChallenges(challengeInstances);
+    this.initializeChallenges(challengesByYear);
   }
 
-  initializeChallenges(
-    challengeInstances: { year: number; day: number; instance: day }[]
-  ): void {
-    for (const { year, day, instance } of challengeInstances) {
-      if (!this.challenges[year]) {
-        this.challenges[year] = {};
+  initializeChallenges(challengesByYear: Record<number, Record<number, day>>): void {
+    for (const [year, daysForYear] of Object.entries(challengesByYear)) {
+      const yearInt = Number(year);
+      this.challenges[yearInt] = {};
+      for (const [dayNum, instance] of Object.entries(daysForYear)) {
+        this.challenges[yearInt][Number(dayNum)] = {
+          run: (input: string[]) => instance.run(input),
+        };
       }
-      this.challenges[year][day] = {
-        run: (input: string[]) => instance.run(input),
-      };
     }
   }
 
-  getYears(): { year: number; days: number; stars: number }[] {
-    return Object.keys(this.challenges).map((year) => {
-      const yearInt = parseInt(year, 10);
-      const days = Object.keys(this.challenges[yearInt]).length;
+  getYears(): YearInfo[] {
+    return Object.entries(challengesByYear).map(([year, daysForYear]) => {
+      const instances = Object.values(daysForYear);
       // Count the number of stars earned for the year by checking the number of overrides
-      const stars = challengeInstances
-        .filter((ci) => ci.year === yearInt)
-        .reduce((count, ci) => {
-          let overrides = 0;
-          if (ci.instance.part1 !== day.prototype.part1) overrides++;
-          if (ci.instance.part2 !== day.prototype.part2) overrides++;
-          return count + overrides;
-        }, 0);
-      return { year: yearInt, days, stars };
+      const stars = instances.reduce((count, instance) => {
+        let overrides = 0;
+        if (instance.part1 !== day.prototype.part1) overrides++;
+        if (instance.part2 !== day.prototype.part2) overrides++;
+        return count + overrides;
+      }, 0);
+      return { year: Number(year), days: instances.length, stars };
     });
   }
 
@@ -96,7 +93,8 @@ export class RunnerService {
   async runChallenge(
     year: number,
     day: number,
-    timeoutMs = 10000
+    timeoutMs = 10000,
+    signal?: AbortSignal
   ): Promise<{
     part1: string;
     part2: string;
@@ -130,9 +128,13 @@ export class RunnerService {
         if (settled) return;
         settled = true;
         clearTimeout(timer);
+        signal?.removeEventListener('abort', onAbort);
         fn();
         worker.terminate();
       };
+
+      const onAbort = () => finish(() => reject(`Day ${day} of ${year} was cancelled`));
+      signal?.addEventListener('abort', onAbort);
 
       worker.onmessage = ({ data }) => {
         finish(() => (data.error ? reject(data.stack) : resolve(data)));

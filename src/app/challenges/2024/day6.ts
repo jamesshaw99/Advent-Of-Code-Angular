@@ -1,19 +1,15 @@
 import { day } from '../../helpers/day';
+import { ORTHOGONAL_DIRECTIONS, parseCharGrid } from '../../helpers/grid';
 
 export class year2024day6 extends day {
   map: string[][] = [];
   visited = new Set<string>();
   guardPosition: { row: number; col: number } = { row: 0, col: 0 };
   directionIndex = 0; // Start facing up
-  directions = [
-    { rowDelta: -1, colDelta: 0 }, // Up
-    { rowDelta: 0, colDelta: 1 }, // Right
-    { rowDelta: 1, colDelta: 0 }, // Down
-    { rowDelta: 0, colDelta: -1 }, // Left
-  ];
+  directions = ORTHOGONAL_DIRECTIONS.map(([rowDelta, colDelta]) => ({ rowDelta, colDelta })); // Up, Right, Down, Left
 
   override preChallenge(): void {
-    this.map = this.input.map((row) => row.split(''));
+    this.map = parseCharGrid(this.input);
     this.visited = new Set();
     const { row, col } = this.findGuard();
     this.guardPosition = { row, col };

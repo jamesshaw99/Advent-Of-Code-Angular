@@ -1,4 +1,5 @@
 import { day } from "../../helpers/day";
+import { lcmAll } from "../../helpers/mathUtils";
 
 export class year2023day8 extends day {
     instructions = '';
@@ -26,7 +27,7 @@ export class year2023day8 extends day {
                 allSteps.push(steps);
             }
         }
-        return `number of steps: ${this.findLCMArray(allSteps)}`;
+        return `number of steps: ${lcmAll(allSteps)}`;
     }
 
     navigateUntilZ(current: string): number {
@@ -42,29 +43,5 @@ export class year2023day8 extends day {
             }
         }
         return steps;
-    }
-
-    findGCD(a: number, b: number): number {
-        while(b !== 0){
-            const temp = b;
-            b = a % b;
-            a = temp;
-        }
-        return a;
-    }
-
-    findLCM(a: number, b: number): number {
-        return (a * b)/this.findGCD(a, b);
-    }
-
-    findLCMArray(numbers: number[]): number {
-        if(numbers.length === 0){
-            throw new Error('Array must not be empty');
-        }
-        let lcm = numbers[0];
-        for(let i = 1; i < numbers.length; i++){
-            lcm = this.findLCM(lcm, numbers[i]);
-        }
-        return lcm;
     }
 }

@@ -1,12 +1,5 @@
 import { ProgramExecutor } from "./program-executor";
 
-interface GameBoard {
-  board: string[][];
-  score: number;
-  paddleX: number;
-  ballX: number;
-}
-
 export class IO {
   private inputsLog: number[] = [];
   private outputsLog: number[] = [];
@@ -15,6 +8,8 @@ export class IO {
   private paddleX = 0;
   private ballX = 0;
   private score = 0;
+  private board: string[][] = Array(20).fill(null).map(() => Array(38).fill(' '));
+  private lastGameStateIndex = 0;
   private outputInterrupt = false;
   private emptyInputValue = 0;
   private blockOnEmptyInput = false;
@@ -33,11 +28,7 @@ export class IO {
 
   async in(): Promise<number> {
     if (this.gameMode) {
-      const gameState = this.updateGameState();
-      this.score = gameState.score;
-      this.paddleX = gameState.paddleX;
-      this.ballX = gameState.ballX;
-      
+      this.updateGameState();
       return this.calculateGameInput();
     }
 
@@ -64,30 +55,24 @@ export class IO {
     return this.blockOnEmptyInput && !this.gameMode && !this.hasPendingInput();
   }
 
-  private updateGameState(): GameBoard {
-    const board: string[][] = Array(20).fill(null).map(() => Array(38).fill(' '));
-    let score = 0;
-    let paddleX = this.paddleX;
-    let ballX = this.ballX;
-
-    for (let i = 0; i < this.outputsLog.length; i += 3) {
+  private updateGameState(): void {
+    for (let i = this.lastGameStateIndex; i < this.outputsLog.length; i += 3) {
       const x = this.outputsLog[i];
       const y = this.outputsLog[i + 1];
       const tileId = this.outputsLog[i + 2];
 
       if (x === -1 && y === 0) {
-        score = tileId;
+        this.score = tileId;
         continue;
       }
 
-      const tile = this.getTileChar(tileId);
-      board[y][x] = tile;
+      this.board[y][x] = this.getTileChar(tileId);
 
-      if (tileId === 3) paddleX = x;
-      if (tileId === 4) ballX = x;
+      if (tileId === 3) this.paddleX = x;
+      if (tileId === 4) this.ballX = x;
     }
 
-    return { board, score, paddleX, ballX };
+    this.lastGameStateIndex = this.outputsLog.length;
   }
 
   private getTileChar(tileId: number): string {

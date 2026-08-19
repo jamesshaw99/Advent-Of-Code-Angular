@@ -158,5 +158,48 @@ describe('IO', () => {
             // Assert
             expect(input).toBe(1);
         });
+
+        it('should only process new outputs on each call, not the whole log', async () => {
+            // Arrange
+            const gameIo = new IO(executor, true);
+            gameIo.out(0); gameIo.out(0); gameIo.out(3); // paddle at x=0
+
+            // Act
+            await gameIo.in();
+            gameIo.out(0); gameIo.out(0); gameIo.out(4); // ball moves to x=0
+            const input = await gameIo.in();
+
+            // Assert
+            expect(input).toBe(0);
+        });
+
+        it('should retain the score across calls when no new score output arrives', async () => {
+            // Arrange
+            const gameIo = new IO(executor, true);
+            gameIo.out(-1); gameIo.out(0); gameIo.out(100); // score = 100
+
+            // Act
+            await gameIo.in();
+            gameIo.out(1); gameIo.out(1); gameIo.out(3); // unrelated paddle output, no new score
+            await gameIo.in();
+
+            // Assert
+            expect(gameIo.getScore()).toBe(100);
+        });
+
+        it('should be idempotent when called with no new outputs in between', async () => {
+            // Arrange
+            const gameIo = new IO(executor, true);
+            gameIo.out(2); gameIo.out(2); gameIo.out(3);
+            gameIo.out(5); gameIo.out(2); gameIo.out(4);
+
+            // Act
+            const input1 = await gameIo.in();
+            const input2 = await gameIo.in();
+
+            // Assert
+            expect(input1).toBe(1);
+            expect(input2).toBe(1);
+        });
     });
 });

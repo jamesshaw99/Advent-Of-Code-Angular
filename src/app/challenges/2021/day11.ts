@@ -1,15 +1,12 @@
 import { day } from "../../helpers/day";
+import { DIAGONAL_DIRECTIONS, inBounds, parseDigitGrid } from "../../helpers/grid";
 
 export class year2021day11 extends day {
     private octopuses: number[][] = [];
-    private readonly directions = [
-        [-1, -1], [-1, 0], [-1, 1],
-        [ 0, -1],          [ 0, 1],
-        [ 1, -1], [ 1, 0], [ 1, 1]
-    ];
+    private readonly directions = DIAGONAL_DIRECTIONS;
 
     override preChallenge(): void {
-        this.octopuses = this.input.map(row => [...row].map(char => parseInt(char)));
+        this.octopuses = parseDigitGrid(this.input);
     }
 
     override part1(): string {
@@ -92,8 +89,7 @@ export class year2021day11 extends day {
     }
 
     private isValidPosition(y: number, x: number): boolean {
-        return y >= 0 && y < this.octopuses.length && 
-               x >= 0 && x < this.octopuses[0].length;
+        return inBounds(y, x, this.octopuses.length, this.octopuses[0].length);
     }
 
     private allFlashed(): boolean {
@@ -101,6 +97,6 @@ export class year2021day11 extends day {
     }
 
     private resetGrid(): void {
-        this.octopuses = this.input.map(row => [...row].map(char => parseInt(char)));
+        this.octopuses = parseDigitGrid(this.input);
     }
 }
