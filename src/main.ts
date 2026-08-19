@@ -8,12 +8,11 @@ import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
 import { routes } from "./app/app.routes";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatIconModule } from "@angular/material/icon";
 import { AppComponent } from "./app/app.component";
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(BrowserModule, MatProgressBarModule, MatIconModule),
+        importProvidersFrom(BrowserModule, MatProgressBarModule),
         provideRouter(routes),
         provideZoneChangeDetection({ eventCoalescing: true }),
         InputService,

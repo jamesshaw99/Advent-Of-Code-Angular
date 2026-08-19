@@ -3,7 +3,6 @@ import { AppComponent } from './app.component';
 import { provideRouter, RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { RunnerService } from './services/runner.service';
-import { MatIconModule } from '@angular/material/icon';
 
 class MockRunnerService {
   getYears() {
@@ -29,7 +28,7 @@ describe('AppComponent', () => {
     mockMatchMedia(false);
 
     await TestBed.configureTestingModule({
-    imports: [RouterModule.forRoot([]), MatIconModule, AppComponent],
+    imports: [RouterModule.forRoot([]), AppComponent],
     providers: [
         provideRouter([]),
         { provide: RunnerService, useClass: MockRunnerService },
@@ -150,12 +149,12 @@ describe('AppComponent', () => {
       const compiled = fixture.nativeElement as HTMLElement;
       const toggleButton = compiled.querySelector('.theme-toggle') as HTMLButtonElement;
 
-      expect(toggleButton.querySelector('mat-icon')?.textContent).toBe('light_mode');
+      expect(toggleButton.textContent?.trim()).toBe('☀');
 
       toggleButton.click();
       fixture.detectChanges();
 
-      expect(toggleButton.querySelector('mat-icon')?.textContent).toBe('dark_mode');
+      expect(toggleButton.textContent?.trim()).toBe('☾');
     });
   });
 });

@@ -10,13 +10,13 @@
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/year', info.year]">
               {{info.year}}
-              <span class="badge-gold"><mat-icon>star</mat-icon>{{info.stars}}</span>
+              <span class="badge-gold"><span class="star-glyph" aria-hidden="true">★</span>{{info.stars}}</span>
             </a>
           </li>
         }
       </ul>
       <button class="theme-toggle" type="button" (click)="toggleTheme()" [attr.aria-pressed]="isDarkMode" aria-label="Toggle dark mode">
-        <mat-icon>{{ isDarkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
+        {{ isDarkMode ? '☾' : '☀' }}
       </button>
     </div>
   </nav>

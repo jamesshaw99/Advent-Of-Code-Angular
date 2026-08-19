@@ -70,7 +70,7 @@ export class year2021day13 extends day {
       rows.push(row);
     }
     
-    return rows.join('<br>');
+    return rows.join('\n');
   }
 
   private runInstructions(points: Point[], noFolds: number): void {

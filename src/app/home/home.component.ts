@@ -1,6 +1,5 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RunnerService } from '../services/runner.service';
-import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { YearInfo } from '../models/YearInfo';
 
@@ -9,7 +8,7 @@ import { YearInfo } from '../models/YearInfo';
     templateUrl: './home.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: './home.component.css',
-    imports: [MatIcon, RouterLink]
+    imports: [RouterLink]
 })
 export class HomeComponent implements OnInit {
   private runnerService = inject(RunnerService);

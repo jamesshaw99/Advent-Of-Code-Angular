@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { RunnerService } from '../services/runner.service';
 import { By } from '@angular/platform-browser';
-import { MatIconModule } from '@angular/material/icon';
 import { provideRouter } from '@angular/router';
 
 describe('HomeComponent', () => {
@@ -23,7 +22,7 @@ describe('HomeComponent', () => {
         ]);
 
         TestBed.configureTestingModule({
-            imports: [MatIconModule, HomeComponent],
+            imports: [HomeComponent],
             providers: [
                 { provide: RunnerService, useValue: mockRunnerService },
                 provideRouter([]),

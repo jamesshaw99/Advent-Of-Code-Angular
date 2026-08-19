@@ -12,28 +12,50 @@
         </mat-progress-bar>
       }
     </div>
-    <div class="row">
-      @for (day of vm.dailyResults; track day.day) {
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body text-center">
-              <h5 class="card-title">{{day.title}}</h5>
-              <p class="card-text">Day {{day.day}}</p>
-              <p class="card-text mb-1">
-                Part 1
-                <span class="badge-time">{{day.timePart1}}ms</span>
-              </p>
-              <p class="challenge-result" [innerHTML]="day.part1"></p>
-              <p class="card-text mb-1">
-                Part 2
-                <span class="badge-time">{{day.timePart2}}ms</span>
-              </p>
-              <p class="challenge-result" [innerHTML]="day.part2"></p>
-              <a [routerLink]="['/', vm.year, 'day', day.day]" class="btn btn-primary">View Challenge</a>
-            </div>
-          </div>
-        </div>
+    <div class="calendar-grid">
+      @for (slot of vm.days; track slot.day) {
+        <a
+          class="day-tile"
+          [class.day-tile--gold]="slot.stars === 2"
+          [class.day-tile--partial]="slot.stars === 1"
+          [routerLink]="['/', vm.year, 'day', slot.day]"
+          [title]="slot.title ?? ('Day ' + slot.day)"
+        >
+          <span class="day-tile__number">{{slot.day}}</span>
+          <span class="day-tile__stars" aria-hidden="true">{{slot.starsLabel}}</span>
+        </a>
       }
     </div>
+
+    @if (vm.dailyResults.length) {
+      <div class="results-log">
+        <p class="results-log__prompt">$ results --year {{vm.year}}</p>
+        @for (day of vm.dailyResults; track day.day) {
+          <div class="results-log__entry">
+            <div class="results-log__line">
+              <span class="results-log__day">Day {{padDay(day.day)}}</span>
+              <span>Part 1: </span>
+              @if (!isMultilineAnswer(day.part1)) {
+                <span class="results-log__answer" [innerHTML]="day.part1"></span>
+              }
+              <span class="badge-time">{{day.timePart1}}ms</span>
+            </div>
+            @if (isMultilineAnswer(day.part1)) {
+              <pre class="results-log__ascii" [innerHTML]="day.part1"></pre>
+            }
+            <div class="results-log__line results-log__line--indent">
+              <span>Part 2: </span>
+              @if (!isMultilineAnswer(day.part2)) {
+                <span class="results-log__answer" [innerHTML]="day.part2"></span>
+              }
+              <span class="badge-time">{{day.timePart2}}ms</span>
+            </div>
+            @if (isMultilineAnswer(day.part2)) {
+              <pre class="results-log__ascii" [innerHTML]="day.part2"></pre>
+            }
+          </div>
+        }
+      </div>
+    }
   }
 </div>
